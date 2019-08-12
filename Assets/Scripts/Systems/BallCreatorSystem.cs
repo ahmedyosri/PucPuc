@@ -24,7 +24,7 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.hasBall && !entity.hasObject;
+        return entity.hasBall && !entity.hasGameObject;
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -34,8 +34,10 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
             GameObject newObj = GameObject.Instantiate(ballPrefab) as GameObject;
             newObj.transform.SetParent(secondaryPosition);
 
-            e.AddObject(newObj);
+            e.AddGameObject(newObj);
             newObj.Link(e);
+
+            e.isSecondaryBall = true;
         }
     }
 }

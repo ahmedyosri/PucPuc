@@ -9,21 +9,25 @@
 public static class GameComponentsLookup {
 
     public const int Ball = 0;
-    public const int Moving = 1;
-    public const int Object = 2;
-    public const int Position = 3;
-    public const int PrimaryBall = 4;
-    public const int ReachedTarget = 5;
-    public const int SecondaryBall = 6;
-    public const int TargetPosition = 7;
-    public const int Velocity = 8;
+    public const int BoardBall = 1;
+    public const int BoardManager = 2;
+    public const int GameObject = 3;
+    public const int Moving = 4;
+    public const int Position = 5;
+    public const int PrimaryBall = 6;
+    public const int ReachedTarget = 7;
+    public const int SecondaryBall = 8;
+    public const int TargetPosition = 9;
+    public const int Velocity = 10;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "Ball",
+        "BoardBall",
+        "BoardManager",
+        "GameObject",
         "Moving",
-        "Object",
         "Position",
         "PrimaryBall",
         "ReachedTarget",
@@ -34,8 +38,10 @@ public static class GameComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(BallComponent),
+        typeof(BoardBall),
+        typeof(BoardManager),
+        typeof(GameObjectComponent),
         typeof(MovingComponent),
-        typeof(ObjectComponent),
         typeof(PositionComponent),
         typeof(PrimaryBall),
         typeof(ReachedTargetComponent),

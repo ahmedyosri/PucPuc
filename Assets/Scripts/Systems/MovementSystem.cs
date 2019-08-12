@@ -2,31 +2,23 @@
 using Entitas;
 using UnityEngine;
 
-public class MovementSystem : ReactiveSystem<GameEntity>
+public class MovementSystem : IExecuteSystem
 {
     GameContext gameContext;
+    IGroup<GameEntity> movingEntities;
 
-    float speed = 2.0f;
+    float speed = 15.0f;
     float borderLimit = 2.5f;
 
-    public MovementSystem(Contexts contexts) : base(contexts.game)
+    public MovementSystem(Contexts contexts)
     {
         gameContext = contexts.game;
+        movingEntities = gameContext.GetGroup(GameMatcher.Moving);
     }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
+    public void Execute()
     {
-        return context.CreateCollector(GameMatcher.Velocity);
-    }
-
-    protected override bool Filter(GameEntity entity)
-    {
-        return entity.hasVelocity;
-    }
-
-    protected override void Execute(List<GameEntity> entities)
-    {
-        foreach(var e in entities)
+        foreach(var e in movingEntities.GetEntities())
         {
             e.ReplacePosition(e.position.pos + e.velocity.direction * Time.deltaTime * speed);
 

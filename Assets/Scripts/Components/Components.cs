@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Game]
@@ -15,7 +16,7 @@ public class VelocityComponent : IComponent
 }
 
 [Game]
-public class ObjectComponent : IComponent
+public class GameObjectComponent : IComponent
 {
     public GameObject gameobject;
 }
@@ -52,7 +53,26 @@ public class PrimaryBall : IComponent
 public class SecondaryBall : IComponent
 { }
 
+[Game]
+public class BoardBall : IComponent
+{
+    public Vector2 boardIdx;
+    public int value;
+    public bool shifted;
+}
 
+[Game, Unique]
+public class BoardManager : IComponent
+{
+    public GameEntity[,] entities;
+    public const int width = 6;
+    public const int length = 10;
+
+    public BoardManager()
+    {
+        entities = new GameEntity[length, width];
+    }
+}
 
 [Input, Unique]
 public class MouseLeftComponent : IComponent
