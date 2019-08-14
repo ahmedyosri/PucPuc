@@ -1,5 +1,11 @@
+------------------------------------------------------ Done (Estimated(m)/Actual)
 +Add raycast and targeting system
-+Add merging system
+
+------------------------------------------------------ ToDo (Estimated(m))
+
+*Fix multi collision raytracing (30)
++Add merging system (without animations)
++Add merge animation
 +Add falling cluster system
 +Add number to color
 +Add auto level up/down mechanism
@@ -13,6 +19,6 @@
 +Add main menu
 *Fix GetTargetIndex
 *All vector2 to vector3
-
-----------------------------
-13h : 12.30
+------------------------------------------------------ Total time
+13:00
+18:00
