@@ -1,0 +1,18 @@
++Add raycast and targeting system
++Add merging system
++Add falling cluster system
++Add number to color
++Add auto level up/down mechanism
++Add estimated-ball location system 
++Raycast cutdown
++Primary & seconday ball movements
++Add Perfect notification
++Add scoring system
++Add sounds
++Polish UI
++Add main menu
+*Fix GetTargetIndex
+*All vector2 to vector3
+
+----------------------------
+13h : 12.30

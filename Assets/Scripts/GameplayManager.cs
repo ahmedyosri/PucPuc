@@ -25,6 +25,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     public float cellLength;
 
+    [SerializeField]
+    LineRenderer aimLine;
+
     public Vector2 ZeroPosition
     {
         get { return zeroIndex.transform.position; }
@@ -38,6 +41,11 @@ public class GameplayManager : MonoBehaviour
     public Transform SecondaryBallPosition
     {
         get { return secondaryBallPosition; }
+    }
+
+    public LineRenderer AimLine
+    {
+        get { return aimLine; }
     }
 
     public static GameplayManager Instance;

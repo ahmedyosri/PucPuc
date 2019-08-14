@@ -7,14 +7,9 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
 {
     GameContext gameContext;
 
-    Transform secondaryPosition;
-    GameObject ballPrefab;
-
     public BallCreatorSystem(Contexts contexts) : base(contexts.game)
     {
         gameContext = contexts.game;
-        secondaryPosition = GameObject.Find("SecondaryPosition").transform;
-        ballPrefab = Resources.Load("Ball") as GameObject;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
@@ -24,20 +19,19 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.hasBall && !entity.hasGameObject;
+        return entity.isBall && !entity.hasGameObject;
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
         foreach (var e in entities)
         {
-            GameObject newObj = GameObject.Instantiate(ballPrefab) as GameObject;
-            newObj.transform.SetParent(secondaryPosition);
+            GameObject newObj = GameplayManager.Instance.CreateBall();
 
             e.AddGameObject(newObj);
+            if(!e.hasBoardBall)
+                e.AddBoardBall(Vector2.one * -1,(int) Mathf.Pow(2, Random.Range(1, 5)), false);
             newObj.Link(e);
-
-            e.isSecondaryBall = true;
         }
     }
 }

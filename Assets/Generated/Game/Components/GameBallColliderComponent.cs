@@ -8,18 +8,18 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly ReachedTargetComponent reachedTargetComponent = new ReachedTargetComponent();
+    static readonly BallColliderComponent ballColliderComponent = new BallColliderComponent();
 
-    public bool isReachedTarget {
-        get { return HasComponent(GameComponentsLookup.ReachedTarget); }
+    public bool isBallCollider {
+        get { return HasComponent(GameComponentsLookup.BallCollider); }
         set {
-            if (value != isReachedTarget) {
-                var index = GameComponentsLookup.ReachedTarget;
+            if (value != isBallCollider) {
+                var index = GameComponentsLookup.BallCollider;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
                             ? componentPool.Pop()
-                            : reachedTargetComponent;
+                            : ballColliderComponent;
 
                     AddComponent(index, component);
                 } else {
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherReachedTarget;
+    static Entitas.IMatcher<GameEntity> _matcherBallCollider;
 
-    public static Entitas.IMatcher<GameEntity> ReachedTarget {
+    public static Entitas.IMatcher<GameEntity> BallCollider {
         get {
-            if (_matcherReachedTarget == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.ReachedTarget);
+            if (_matcherBallCollider == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.BallCollider);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherReachedTarget = matcher;
+                _matcherBallCollider = matcher;
             }
 
-            return _matcherReachedTarget;
+            return _matcherBallCollider;
         }
     }
 }

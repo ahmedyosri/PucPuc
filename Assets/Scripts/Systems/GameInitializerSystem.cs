@@ -27,13 +27,15 @@ public class GameInitializerSystem : IInitializeSystem
             for(int j=0; j<6; j++)
             {
                 var newEntity = gameContext.CreateEntity();
+                newEntity.isBall = true;
+                newEntity.isBallCollider = true;
                 newEntity.AddBoardBall(
                     new Vector2(j, i),
                     (int)Mathf.Pow(2, Random.Range(1, 5)),
                     i % 2 == 0 ? false : true
                 );
-                if(gameContext.boardManager != null)
-                    gameContext.boardManager.entities[i, j] = newEntity;
+
+                gameContext.boardManager.entities[i, j] = newEntity;
             }
         }
     }
@@ -49,12 +51,9 @@ public class GameInitializerSystem : IInitializeSystem
 
     GameEntity CreateBall(Transform newParent)
     {
-        GameObject newObj = GameplayManager.Instance.CreateBall();
-
         GameEntity e = gameContext.CreateEntity();
-        e.AddGameObject(newObj);
+        e.isBall = true;
         e.AddPosition(newParent.position);
-        newObj.Link(e);
         return e;
     }
 

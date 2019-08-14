@@ -10,7 +10,6 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
 
     Transform secondaryPosition;
     Transform entitiesParent;
-    GameObject ballPrefab;
 
     public FireBallSystem(Contexts contexts) : base(contexts.input)
     {
@@ -18,8 +17,6 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
 
         entitiesParent = GameObject.Find("EntitiesParent").transform;
         secondaryPosition = GameObject.Find("SecondaryPosition").transform;
-
-        ballPrefab = Resources.Load("Ball") as GameObject;
     }
 
     protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
@@ -41,9 +38,9 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
             Vector2 dir = e.mouseUp.position - primaryBall.position.pos;
             dir.Normalize();
 
-            primaryBall.AddVelocity(dir);
             primaryBall.isPrimaryBall = false;
             primaryBall.isMoving = true;
+            primaryBall.isBallCollider = true;
 
             GameEntity secondaryBall = gameContext.GetGroup(GameMatcher.SecondaryBall).GetEntities()[0];
             secondaryBall.isSecondaryBall = false;
@@ -52,19 +49,16 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
 
             GameEntity newBallEntity = CreateBall(secondaryPosition);
             newBallEntity.isSecondaryBall = true;
+
+            GameplayManager.Instance.AimLine.positionCount = 0;
         }
     }
 
     GameEntity CreateBall(Transform newParent)
     {
-        GameObject newObj = GameObject.Instantiate(ballPrefab) as GameObject;
-        newObj.transform.position = newParent.position;
-        newObj.transform.SetParent(entitiesParent);
-
         GameEntity e = gameContext.CreateEntity();
-        e.AddGameObject(newObj);
+        e.isBall = true;
         e.AddPosition(newParent.position);
-        newObj.Link(e);
         return e;
     }
 

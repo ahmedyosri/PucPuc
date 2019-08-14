@@ -10,23 +10,14 @@ public class PositionComponent : IComponent
 }
 
 [Game]
-public class VelocityComponent : IComponent
-{
-    public Vector2 direction;
-}
-
-[Game]
 public class GameObjectComponent : IComponent
 {
     public GameObject gameobject;
 }
 
-
-
 [Game]
 public class BallComponent : IComponent
 {
-    public string value;
 }
 
 [Game]
@@ -35,13 +26,13 @@ public class MovingComponent : IComponent
 }
 
 [Game]
-public class TargetPositionComponent : IComponent
+public class TargetPositionsComponent : IComponent
 {
-    public Vector2 position;
+    public List<Vector3> positions;
 }
 
 [Game]
-public class ReachedTargetComponent : IComponent
+public class BallColliderComponent : IComponent
 {
 }
 
