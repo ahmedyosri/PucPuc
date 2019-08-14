@@ -1,9 +1,9 @@
 ------------------------------------------------------ Done (Estimated(m)/Actual)
 +Add raycast and targeting system
+*Fix multi collision raytracing (30/30) : Solved by setting proper ball sizes
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-*Fix multi collision raytracing (30)
 +Add merging system (without animations)
 +Add merge animation
 +Add falling cluster system
