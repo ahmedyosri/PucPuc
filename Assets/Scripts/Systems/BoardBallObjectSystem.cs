@@ -27,14 +27,13 @@ public class BoardBallObjectSystem : ReactiveSystem<GameEntity>
     {
         foreach(var e in entities)
         {
-            if (!e.hasPosition)
-                e.AddPosition(Vector2.one * -1);
-
             if (e.boardBall.boardIdx.x > -1)
                 e.ReplacePosition(GameUtils.WorldPosForBall(e));
 
-            e.gameObject.gameobject.GetComponentInChildren<TextMeshPro>().SetText(e.boardBall.value.ToString());
-            e.gameObject.gameobject.GetComponent<SpriteRenderer>().color = Color.yellow;
+            string valText = Mathf.Pow(2, e.boardBall.value).ToString();
+            e.gameObject.gameobject.GetComponentInChildren<TextMeshPro>().SetText(valText);
+            Debug.Log(e.boardBall.value);
+            e.gameObject.gameobject.GetComponent<SpriteRenderer>().color = GameUtils.GetColor(e.boardBall.value);
         }
     }
 }

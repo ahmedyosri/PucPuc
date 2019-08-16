@@ -45,11 +45,27 @@ public class SecondaryBall : IComponent
 { }
 
 [Game]
+public class AddToBoard : IComponent
+{ }
+
+[Game]
 public class BoardBall : IComponent
 {
     public Vector2 boardIdx;
     public int value;
     public bool shifted;
+}
+
+[Game]
+public class MergeTo : IComponent
+{
+    public GameEntity mergeTo;
+}
+
+[Game]
+public class Fall : IComponent
+{
+    public Vector3 initialForce;
 }
 
 [Game, Unique]
@@ -58,11 +74,6 @@ public class BoardManager : IComponent
     public GameEntity[,] entities;
     public const int width = 6;
     public const int length = 10;
-
-    public BoardManager()
-    {
-        entities = new GameEntity[length, width];
-    }
 }
 
 [Input, Unique]

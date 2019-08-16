@@ -15,4 +15,9 @@ public class GameUtils
         idxPos.y *= GameplayManager.Instance.cellLength * -1;
         return GameplayManager.Instance.ZeroPosition + idxPos;
     }
+
+    public static Color GetColor(int val)
+    {
+        return GameplayManager.Instance.ColorsDic.colors[val];
+    }
 }

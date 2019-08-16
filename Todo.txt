@@ -1,13 +1,14 @@
 ------------------------------------------------------ Done (Estimated(m)/Actual)
 +Add raycast and targeting system
 *Fix multi collision raytracing (30/30) : Solved by setting proper ball sizes
++Add merging system (without animations) (60/80)
++Add merge animation (90/80)
++Add falling cluster system (30/30)
++Add number to color(30/20)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Add merging system (without animations)
-+Add merge animation
-+Add falling cluster system
-+Add number to color
++Merge happens to ceiling-connected-ball in cluster
 +Add auto level up/down mechanism
 +Add estimated-ball location system 
 +Raycast cutdown

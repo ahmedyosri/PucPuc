@@ -2,7 +2,7 @@
 using Entitas;
 using UnityEngine;
 
-public class BallMovementSystem : IExecuteSystem
+public class BallFiringSystem : IExecuteSystem
 {
     GameContext gameContext;
     IGroup<GameEntity> firedBallEntities;
@@ -12,7 +12,7 @@ public class BallMovementSystem : IExecuteSystem
     Vector3 pos;
     Vector3 vel;
 
-    public BallMovementSystem(Contexts contexts)
+    public BallFiringSystem(Contexts contexts)
     {
         gameContext = contexts.game;
         firedBallEntities = gameContext.GetGroup(GameMatcher.Moving);
@@ -36,9 +36,7 @@ public class BallMovementSystem : IExecuteSystem
 
             if(e.targetPositions.positions.Count == 0)
             {
-                e.ReplaceBoardBall(e.boardBall.boardIdx, e.boardBall.value, e.boardBall.shifted);
-                e.isMoving = false;
-                gameContext.boardManager.entities[(int)e.boardBall.boardIdx.x, (int)e.boardBall.boardIdx.y] = e;
+                e.isAddToBoard = true;
             }
         }
     }

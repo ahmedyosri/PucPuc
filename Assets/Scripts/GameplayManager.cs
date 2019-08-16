@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     Transform secondaryBallPosition;
 
-    [SerializeField]
     Transform entitiesParent;
+    Transform pooledObjsParent;
 
     [SerializeField]
     GameObject ballPrefab;
@@ -27,6 +28,9 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField]
     LineRenderer aimLine;
+
+    [SerializeField]
+    ColorsDictionary colorsDictionary;
 
     public Vector2 ZeroPosition
     {
@@ -48,6 +52,11 @@ public class GameplayManager : MonoBehaviour
         get { return aimLine; }
     }
 
+    public ColorsDictionary ColorsDic
+    {
+        get { return colorsDictionary; }
+    }
+
     public static GameplayManager Instance;
 
     private Systems systems;
@@ -59,13 +68,30 @@ public class GameplayManager : MonoBehaviour
         Instance = this;
     }
 
+    Queue<GameObject> pooledObjects;
+
     // Start is called before the first frame update
     void Start()
     {
+        entitiesParent = new GameObject("EntitiesParent").transform;
+        CreatePool();
+
         contexts = Contexts.sharedInstance;
         systems = CreateSystems(contexts);
         systems.Initialize();
 
+    }
+
+    private void CreatePool()
+    {
+        pooledObjsParent = new GameObject("PooledObjects").transform;
+        pooledObjsParent.position = Vector3.one * -10;
+        pooledObjects = new Queue<GameObject>();
+
+        for(int i=0; i<62; i++)
+        {
+            pooledObjects.Enqueue(Instantiate(ballPrefab, pooledObjsParent) as GameObject);
+        }
     }
 
     private Systems CreateSystems(Contexts contexts)
@@ -83,6 +109,15 @@ public class GameplayManager : MonoBehaviour
 
     public GameObject CreateBall()
     {
-        return Instantiate(ballPrefab, entitiesParent) as GameObject;
+        GameObject objRef = pooledObjects.Peek();
+        pooledObjects.Dequeue();
+        return objRef;
+    }
+
+    public void DeleteBall(GameObject objRef)
+    {
+        objRef.transform.parent = pooledObjsParent;
+        objRef.transform.localPosition = Vector3.zero;
+        objRef.GetComponent<Collider2D>().enabled = ballPrefab.GetComponent<Collider2D>().enabled;
     }
 }

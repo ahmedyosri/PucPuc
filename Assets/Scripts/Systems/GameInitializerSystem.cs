@@ -15,27 +15,27 @@ public class GameInitializerSystem : IInitializeSystem
 
     public void Initialize()
     {
-        gameContext.ReplaceBoardManager(new GameEntity[10, 6]);
+        gameContext.ReplaceBoardManager(new GameEntity[BoardManager.width, BoardManager.length]);
         CreateShootingBalls();
         CreateBoard();
     }
 
     private void CreateBoard()
     {
-        for(int i=0; i<4; i++)
+        for(int y=0; y<4; y++)
         {
-            for(int j=0; j<6; j++)
+            for(int x=0; x<BoardManager.width; x++)
             {
                 var newEntity = gameContext.CreateEntity();
                 newEntity.isBall = true;
                 newEntity.isBallCollider = true;
                 newEntity.AddBoardBall(
-                    new Vector2(j, i),
-                    (int)Mathf.Pow(2, Random.Range(1, 5)),
-                    i % 2 == 0 ? false : true
+                    new Vector2(x, y),
+                    Random.Range(1, 5),
+                    y % 2 == 0 ? false : true
                 );
 
-                gameContext.boardManager.entities[i, j] = newEntity;
+                gameContext.boardManager.entities[x, y] = newEntity;
             }
         }
     }

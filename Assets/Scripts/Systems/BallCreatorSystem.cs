@@ -29,8 +29,13 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
             GameObject newObj = GameplayManager.Instance.CreateBall();
 
             e.AddGameObject(newObj);
-            if(!e.hasBoardBall)
-                e.AddBoardBall(Vector2.one * -1,(int) Mathf.Pow(2, Random.Range(1, 5)), false);
+
+            if (!e.hasPosition)
+                e.AddPosition(Vector2.one * -1);
+
+            if (!e.hasBoardBall)
+                e.AddBoardBall(Vector2.one * -1,Random.Range(1, 5), false);
+
             newObj.Link(e);
         }
     }

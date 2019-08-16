@@ -5,13 +5,17 @@ public class GameplayFeature : Feature
     {
         Add(new GameInitializerSystem(contexts));
         Add(new BallCreatorSystem(contexts));
-        Add(new BallMovementSystem(contexts));
         Add(new UpdatePositionSystem(contexts));
-
         Add(new EmitInputSystem(contexts));
-        Add(new FireBallSystem(contexts));
+
         Add(new BoardBallObjectSystem(contexts));
+        Add(new FireBallSystem(contexts));
         Add(new AimVisualizerSystem(contexts));
         Add(new BallColliderSystem(contexts));
+
+        Add(new BallFiringSystem(contexts));
+        Add(new BallAdditionSystem(contexts));
+        Add(new BallMergingSystem(contexts));
+        Add(new BallFallingSystem(contexts));
     }
 }
