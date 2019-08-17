@@ -8,15 +8,9 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
     GameContext gameContext;
     GameEntity primaryBall;
 
-    Transform secondaryPosition;
-    Transform entitiesParent;
-
     public FireBallSystem(Contexts contexts) : base(contexts.input)
     {
         gameContext = contexts.game;
-
-        entitiesParent = GameObject.Find("EntitiesParent").transform;
-        secondaryPosition = GameObject.Find("SecondaryPosition").transform;
     }
 
     protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
@@ -42,8 +36,9 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
             dir.Normalize();
 
             primaryBall.isPrimaryBall = false;
-            primaryBall.isMoving = true;
             primaryBall.isBallCollider = true;
+            primaryBall.isAddToBoard = true;
+            primaryBall.isMoving = true;
 
             GameplayManager.Instance.AimLine.positionCount = 0;
         }

@@ -28,8 +28,12 @@ public class MovingComponent : IComponent
 [Game]
 public class TargetPositionsComponent : IComponent
 {
+    public float speed;
     public List<Vector3> positions;
 }
+
+[Game]
+public class ReachedTargetComponent : IComponent { }
 
 [Game]
 public class BallColliderComponent : IComponent

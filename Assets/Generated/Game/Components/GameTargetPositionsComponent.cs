@@ -11,16 +11,18 @@ public partial class GameEntity {
     public TargetPositionsComponent targetPositions { get { return (TargetPositionsComponent)GetComponent(GameComponentsLookup.TargetPositions); } }
     public bool hasTargetPositions { get { return HasComponent(GameComponentsLookup.TargetPositions); } }
 
-    public void AddTargetPositions(System.Collections.Generic.List<UnityEngine.Vector3> newPositions) {
+    public void AddTargetPositions(float newSpeed, System.Collections.Generic.List<UnityEngine.Vector3> newPositions) {
         var index = GameComponentsLookup.TargetPositions;
         var component = (TargetPositionsComponent)CreateComponent(index, typeof(TargetPositionsComponent));
+        component.speed = newSpeed;
         component.positions = newPositions;
         AddComponent(index, component);
     }
 
-    public void ReplaceTargetPositions(System.Collections.Generic.List<UnityEngine.Vector3> newPositions) {
+    public void ReplaceTargetPositions(float newSpeed, System.Collections.Generic.List<UnityEngine.Vector3> newPositions) {
         var index = GameComponentsLookup.TargetPositions;
         var component = (TargetPositionsComponent)CreateComponent(index, typeof(TargetPositionsComponent));
+        component.speed = newSpeed;
         component.positions = newPositions;
         ReplaceComponent(index, component);
     }

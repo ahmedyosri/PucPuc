@@ -7,10 +7,10 @@
 +Add falling cluster system (30/30)
 +Add number to color(30/20)
 *Isolate primary/secondary ball creation from firing system (20/20)
++Add a generic ball transitioning system(20/30)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Add a generic ballposition transitioning system(20)
 +Add auto level up/down mechanism
 +Add estimated-ball location system 
 +Merge happens to ceiling-connected-ball in cluster

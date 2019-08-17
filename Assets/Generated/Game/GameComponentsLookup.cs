@@ -19,10 +19,11 @@ public static class GameComponentsLookup {
     public const int Moving = 8;
     public const int Position = 9;
     public const int PrimaryBall = 10;
-    public const int SecondaryBall = 11;
-    public const int TargetPositions = 12;
+    public const int ReachedTarget = 11;
+    public const int SecondaryBall = 12;
+    public const int TargetPositions = 13;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "AddToBoard",
@@ -36,6 +37,7 @@ public static class GameComponentsLookup {
         "Moving",
         "Position",
         "PrimaryBall",
+        "ReachedTarget",
         "SecondaryBall",
         "TargetPositions"
     };
@@ -52,6 +54,7 @@ public static class GameComponentsLookup {
         typeof(MovingComponent),
         typeof(PositionComponent),
         typeof(PrimaryBall),
+        typeof(ReachedTargetComponent),
         typeof(SecondaryBall),
         typeof(TargetPositionsComponent)
     };
