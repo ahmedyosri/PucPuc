@@ -11,6 +11,7 @@ public class GameplayFeature : Feature
         Add(new BoardBallObjectSystem(contexts));
         Add(new FireBallSystem(contexts));
         Add(new AimVisualizerSystem(contexts));
+        Add(new PreparePrimaryBallSystem(contexts));
         Add(new BallColliderSystem(contexts));
 
         Add(new BallFiringSystem(contexts));

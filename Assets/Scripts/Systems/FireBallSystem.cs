@@ -31,10 +31,13 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
 
     protected override void Execute(List<InputEntity> entities)
     {
-        foreach(var e in entities)
-        {
-            primaryBall = gameContext.GetGroup(GameMatcher.PrimaryBall).GetEntities()[0];
+        GameEntity[] primaryBalls = gameContext.GetGroup(GameMatcher.PrimaryBall).GetEntities();
+        if (primaryBalls.Length == 0)
+            return;
+        primaryBall = primaryBalls[0];
 
+        foreach (var e in entities)
+        {
             Vector2 dir = e.mouseUp.position - primaryBall.position.pos;
             dir.Normalize();
 
@@ -42,24 +45,8 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
             primaryBall.isMoving = true;
             primaryBall.isBallCollider = true;
 
-            GameEntity secondaryBall = gameContext.GetGroup(GameMatcher.SecondaryBall).GetEntities()[0];
-            secondaryBall.isSecondaryBall = false;
-            secondaryBall.isPrimaryBall = true;
-            secondaryBall.ReplacePosition(primaryBall.position.pos);
-
-            GameEntity newBallEntity = CreateBall(secondaryPosition);
-            newBallEntity.isSecondaryBall = true;
-
             GameplayManager.Instance.AimLine.positionCount = 0;
         }
-    }
-
-    GameEntity CreateBall(Transform newParent)
-    {
-        GameEntity e = gameContext.CreateEntity();
-        e.isBall = true;
-        e.AddPosition(newParent.position);
-        return e;
     }
 
 }

@@ -1,16 +1,19 @@
 ------------------------------------------------------ Done (Estimated(m)/Actual)
-+Add raycast and targeting system
++Getting knowing to Entitas and kickstart the game (--/730)
++Add raycast and targeting system (--/50)
 *Fix multi collision raytracing (30/30) : Solved by setting proper ball sizes
 +Add merging system (without animations) (60/80)
 +Add merge animation (90/80)
 +Add falling cluster system (30/30)
 +Add number to color(30/20)
+*Isolate primary/secondary ball creation from firing system (20/20)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Merge happens to ceiling-connected-ball in cluster
++Add a generic ballposition transitioning system(20)
 +Add auto level up/down mechanism
 +Add estimated-ball location system 
++Merge happens to ceiling-connected-ball in cluster
 +Raycast cutdown
 +Primary & seconday ball movements
 +Add Perfect notification
@@ -23,3 +26,4 @@
 ------------------------------------------------------ Total time
 13:00
 18:00
+21:30
