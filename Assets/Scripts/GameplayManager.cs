@@ -30,6 +30,9 @@ public class GameplayManager : MonoBehaviour
     LineRenderer aimLine;
 
     [SerializeField]
+    public float ballFiringSpeed;
+
+    [SerializeField]
     ColorsDictionary colorsDictionary;
 
     public Vector2 ZeroPosition

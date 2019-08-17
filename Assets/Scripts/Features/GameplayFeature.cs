@@ -7,6 +7,7 @@ public class GameplayFeature : Feature
         Add(new BallCreatorSystem(contexts));
         Add(new UpdatePositionSystem(contexts));
         Add(new EmitInputSystem(contexts));
+        Add(new MoveToTargetSystem(contexts));
 
         Add(new BoardBallObjectSystem(contexts));
         Add(new FireBallSystem(contexts));
@@ -14,7 +15,6 @@ public class GameplayFeature : Feature
         Add(new PreparePrimaryBallSystem(contexts));
         Add(new BallColliderSystem(contexts));
 
-        Add(new BallFiringSystem(contexts));
         Add(new BallAdditionSystem(contexts));
         Add(new BallMergingSystem(contexts));
         Add(new BallFallingSystem(contexts));

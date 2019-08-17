@@ -80,7 +80,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             ballTargets.Add(end);
         }
 
-        ballEntity.ReplaceTargetPositions(ballTargets);
+        ballEntity.ReplaceTargetPositions(GameplayManager.Instance.ballFiringSpeed, ballTargets);
         UpdateAimLine();
     }
 
