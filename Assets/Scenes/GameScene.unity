@@ -144,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63124482}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: -4, z: 0}
+  m_LocalPosition: {x: -1, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1249042287}
@@ -429,7 +429,7 @@ Transform:
   - {fileID: 1125414044}
   - {fileID: 932749708}
   m_Father: {fileID: 1249042287}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643106225
 GameObject:
@@ -567,6 +567,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655040644}
   m_CullTransparentMesh: 0
+--- !u!1 &668059199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 668059200}
+  m_Layer: 0
+  m_Name: BallCreationPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &668059200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668059199}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: -5.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1249042287}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &932749707
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primaryBallPosition: {fileID: 1702131421}
   secondaryBallPosition: {fileID: 63124483}
+  ballCreationPosition: {fileID: 668059200}
   ballPrefab: {fileID: 5485269961235436574, guid: 7bb0d926d4137044f83b2d3cd9e6bc17,
     type: 3}
   zeroIndex: {fileID: 545999053}
@@ -843,6 +874,7 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 1702131421}
   - {fileID: 63124483}
+  - {fileID: 668059200}
   - {fileID: 2084808277}
   - {fileID: 545999053}
   - {fileID: 1302633786}
@@ -915,7 +947,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1249042287}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &1302633787
 LineRenderer:
@@ -1131,5 +1163,5 @@ Transform:
   m_LocalScale: {x: 5.625, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 1249042287}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

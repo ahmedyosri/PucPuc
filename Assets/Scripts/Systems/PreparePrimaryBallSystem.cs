@@ -30,10 +30,15 @@ public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
         GameEntity secondaryBall = gameContext.GetGroup(GameMatcher.SecondaryBall).GetEntities()[0];
         secondaryBall.isSecondaryBall = false;
         secondaryBall.isPrimaryBall = true;
-        secondaryBall.ReplacePosition(GameplayManager.Instance.PrimaryBallPosition.position);
 
-        GameEntity newBallEntity = CreateBall(GameplayManager.Instance.SecondaryBallPosition.position);
+        secondaryBall.ReplaceTargetPositions(30, new List<Vector3>() { GameplayManager.Instance.PrimaryBallPosition.position });
+        secondaryBall.isMoving = true;
+
+        GameEntity newBallEntity = CreateBall(GameplayManager.Instance.ballCreationPosition.position);
         newBallEntity.isSecondaryBall = true;
+        newBallEntity.ReplaceTargetPositions(30, new List<Vector3>() { GameplayManager.Instance.SecondaryBallPosition.position });
+        newBallEntity.isMoving = true;
+        
     }
 
     GameEntity CreateBall(Vector3 newPosition)

@@ -31,10 +31,10 @@ public class BallCreatorSystem : ReactiveSystem<GameEntity>
             e.AddGameObject(newObj);
 
             if (!e.hasPosition)
-                e.AddPosition(Vector2.one * -1);
+                e.AddPosition(Vector2.one * -10);
 
             if (!e.hasBoardBall)
-                e.AddBoardBall(Vector2.one * -1,Random.Range(1, 5), false);
+                e.AddBoardBall(Vector2.one * -10,Random.Range(1, 5), false);
 
             newObj.Link(e);
         }

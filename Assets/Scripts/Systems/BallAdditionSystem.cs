@@ -45,6 +45,7 @@ public class BallAdditionSystem : ReactiveSystem<GameEntity>
             e.ReplaceBoardBall(e.boardBall.boardIdx, e.boardBall.value, e.boardBall.shifted);
             gameContext.boardManager.entities[(int)e.boardBall.boardIdx.x, (int)e.boardBall.boardIdx.y] = e;
 
+            ApplyImpact(e);
 
             List<GameEntity> cluster = GetCluster(e.boardBall.boardIdx, e.boardBall.value);
 
@@ -102,6 +103,29 @@ public class BallAdditionSystem : ReactiveSystem<GameEntity>
                 }
             }
 
+        }
+    }
+
+    void ApplyImpact(GameEntity e)
+    {
+        List<Vector2> nodeneighbors = e.boardBall.shifted ? neighborsOfShited : neighborsOfNotShited;
+        foreach (Vector2 nodeShift in nodeneighbors)
+        {
+            Vector2 nodeIdx = e.boardBall.boardIdx + nodeShift;
+            if (nodeIdx.x < 0 || nodeIdx.y < 0 || nodeIdx.x >= BoardManager.width || nodeIdx.y >= BoardManager.length)
+            {
+                continue;
+            }
+
+            GameEntity neighbor = gameContext.boardManager.entities[(int)nodeIdx.x, (int)nodeIdx.y];
+            if (neighbor == null)
+                continue;
+
+            Vector3 pos = neighbor.position.pos;
+            Vector3 newPos = pos - (Vector3)e.position.pos;
+            newPos = newPos.normalized * 0.1f;
+            neighbor.AddTargetPositions(1.0f, new List<Vector3>() { pos + newPos, pos });
+            neighbor.isMoving = true;
         }
     }
 

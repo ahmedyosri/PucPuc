@@ -28,7 +28,10 @@ public class BoardBallObjectSystem : ReactiveSystem<GameEntity>
         foreach(var e in entities)
         {
             if (e.boardBall.boardIdx.x > -1)
-                e.ReplacePosition(GameUtils.WorldPosForBall(e));
+            {
+                e.ReplaceTargetPositions(50, new List<Vector3>() { GameUtils.WorldPosForBall(e) });
+                e.isMoving = true;
+            }
 
             string valText = Mathf.Pow(2, e.boardBall.value).ToString();
             e.gameObject.gameobject.GetComponentInChildren<TextMeshPro>().SetText(valText);

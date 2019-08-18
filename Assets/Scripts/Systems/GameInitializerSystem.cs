@@ -34,7 +34,6 @@ public class GameInitializerSystem : IInitializeSystem
                     Random.Range(1, 5),
                     y % 2 == 0 ? false : true
                 );
-
                 gameContext.boardManager.entities[x, y] = newEntity;
             }
         }

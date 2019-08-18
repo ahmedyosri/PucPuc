@@ -33,6 +33,16 @@ public class TargetPositionsComponent : IComponent
 }
 
 [Game]
+public class VelocityComponent : IComponent
+{
+    public Vector3 vel;
+}
+
+[Game]
+public class ImpactingComponent : IComponent
+{ }
+
+[Game]
 public class ReachedTargetComponent : IComponent { }
 
 [Game]

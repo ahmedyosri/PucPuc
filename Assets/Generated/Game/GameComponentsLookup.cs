@@ -15,15 +15,17 @@ public static class GameComponentsLookup {
     public const int BoardManager = 4;
     public const int Fall = 5;
     public const int GameObject = 6;
-    public const int MergeTo = 7;
-    public const int Moving = 8;
-    public const int Position = 9;
-    public const int PrimaryBall = 10;
-    public const int ReachedTarget = 11;
-    public const int SecondaryBall = 12;
-    public const int TargetPositions = 13;
+    public const int Impacting = 7;
+    public const int MergeTo = 8;
+    public const int Moving = 9;
+    public const int Position = 10;
+    public const int PrimaryBall = 11;
+    public const int ReachedTarget = 12;
+    public const int SecondaryBall = 13;
+    public const int TargetPositions = 14;
+    public const int Velocity = 15;
 
-    public const int TotalComponents = 14;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "AddToBoard",
@@ -33,13 +35,15 @@ public static class GameComponentsLookup {
         "BoardManager",
         "Fall",
         "GameObject",
+        "Impacting",
         "MergeTo",
         "Moving",
         "Position",
         "PrimaryBall",
         "ReachedTarget",
         "SecondaryBall",
-        "TargetPositions"
+        "TargetPositions",
+        "Velocity"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -50,12 +54,14 @@ public static class GameComponentsLookup {
         typeof(BoardManager),
         typeof(Fall),
         typeof(GameObjectComponent),
+        typeof(ImpactingComponent),
         typeof(MergeTo),
         typeof(MovingComponent),
         typeof(PositionComponent),
         typeof(PrimaryBall),
         typeof(ReachedTargetComponent),
         typeof(SecondaryBall),
-        typeof(TargetPositionsComponent)
+        typeof(TargetPositionsComponent),
+        typeof(VelocityComponent)
     };
 }

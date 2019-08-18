@@ -8,7 +8,6 @@ public class MoveToTargetSystem : IExecuteSystem
     GameContext gameContext;
     IGroup<GameEntity> movingEntities;
     Vector3 pos;
-    Vector3 vel;
 
     public MoveToTargetSystem(Contexts contexts)
     {
@@ -21,12 +20,11 @@ public class MoveToTargetSystem : IExecuteSystem
         foreach (var e in movingEntities.GetEntities())
         {
             pos = new Vector3(e.position.pos.x, e.position.pos.y);
-            vel = e.targetPositions.positions[0] - pos;
-            vel.Normalize();
+            e.ReplacePosition(
+                Vector3.MoveTowards(pos, e.targetPositions.positions[0], Time.deltaTime * e.targetPositions.speed)
+            );
 
-            e.ReplacePosition(pos + vel * Time.deltaTime * e.targetPositions.speed);
-
-            if (Vector3.Distance(pos, e.targetPositions.positions[0]) < 0.2f)
+            if (Vector3.Distance(pos, e.targetPositions.positions[0]) < 0.05f)
             {
                 e.ReplacePosition(e.targetPositions.positions[0]);
                 e.targetPositions.positions.RemoveAt(0);

@@ -11,6 +11,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     Transform secondaryBallPosition;
 
+    [SerializeField]
+    public Transform ballCreationPosition;
+
     Transform entitiesParent;
     Transform pooledObjsParent;
 

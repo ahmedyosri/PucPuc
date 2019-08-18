@@ -8,9 +8,13 @@
 +Add number to color(30/20)
 *Isolate primary/secondary ball creation from firing system (20/20)
 +Add a generic ball transitioning system(20/30)
++Impace animations (20/50)
+ *Fixed moving system (--/30)
++Primary ball animations (10/10)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
+*Fix bug with impact and falling calculations (wrong balls moves) (--)
 +Add auto level up/down mechanism
 +Add estimated-ball location system 
 +Merge happens to ceiling-connected-ball in cluster
