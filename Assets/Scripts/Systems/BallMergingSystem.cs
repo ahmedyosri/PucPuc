@@ -10,27 +10,16 @@ public class BallMergingSystem : IExecuteSystem
     public BallMergingSystem(Contexts contexts)
     {
         gameContext = contexts.game;
-        mergingEntities = gameContext.GetGroup(GameMatcher.MergeTo);
+        mergingEntities = gameContext.GetGroup(GameMatcher.AllOf(GameMatcher.MergeTo, GameMatcher.ReachedTarget));
     }
 
     public void Execute()
     {
         GameEntity[] entities = mergingEntities.GetEntities();
-        foreach(GameEntity e in entities)
+        foreach (GameEntity e in entities)
         {
-            if(!e.mergeTo.mergeTo.hasGameObject)
-            {
-                GameplayManager.Instance.DeleteBall(e.gameObject.gameobject);
-                e.Destroy();
-                continue;
-            }
-
-            e.ReplacePosition(Vector2.Lerp(e.position.pos, e.mergeTo.mergeTo.position.pos, Time.deltaTime * 10));
-            if (Vector2.Distance(e.position.pos, e.mergeTo.mergeTo.position.pos) < 0.1f)
-            {
-                GameplayManager.Instance.DeleteBall(e.gameObject.gameobject);
-                e.Destroy();
-            }
+            GameplayManager.Instance.DeleteBall(e.gameObject.gameobject);
+            e.Destroy();
         }
     }
 

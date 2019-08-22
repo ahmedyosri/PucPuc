@@ -29,13 +29,16 @@ public class BoardBallObjectSystem : ReactiveSystem<GameEntity>
         {
             if (e.boardBall.boardIdx.x > -1)
             {
-                e.ReplaceTargetPositions(50, new List<Vector3>() { GameUtils.WorldPosForBall(e) });
-                e.isMoving = true;
+                Vector3 newPos = GameUtils.WorldPosForBall(e);
+                if (newPos != (Vector3) e.position.pos)
+                {
+                    e.ReplaceTargetPositions(50, new List<Vector3>() { newPos });
+                    e.isMoving = true;
+                }
             }
 
             string valText = Mathf.Pow(2, e.boardBall.value).ToString();
             e.gameObject.gameobject.GetComponentInChildren<TextMeshPro>().SetText(valText);
-            Debug.Log(e.boardBall.value);
             e.gameObject.gameobject.GetComponent<SpriteRenderer>().color = GameUtils.GetColor(e.boardBall.value);
         }
     }

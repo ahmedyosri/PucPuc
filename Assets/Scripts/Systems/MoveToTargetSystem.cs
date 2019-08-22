@@ -19,14 +19,11 @@ public class MoveToTargetSystem : IExecuteSystem
     {
         foreach (var e in movingEntities.GetEntities())
         {
-            pos = new Vector3(e.position.pos.x, e.position.pos.y);
-            e.ReplacePosition(
-                Vector3.MoveTowards(pos, e.targetPositions.positions[0], Time.deltaTime * e.targetPositions.speed)
-            );
+            pos = Vector3.MoveTowards((Vector3)e.position.pos, e.targetPositions.positions[0], Time.deltaTime * e.targetPositions.speed);
+            e.ReplacePosition(pos);
 
-            if (Vector3.Distance(pos, e.targetPositions.positions[0]) < 0.05f)
+            if (pos == e.targetPositions.positions[0])
             {
-                e.ReplacePosition(e.targetPositions.positions[0]);
                 e.targetPositions.positions.RemoveAt(0);
             }
 

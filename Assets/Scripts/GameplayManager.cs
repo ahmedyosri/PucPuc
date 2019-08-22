@@ -38,6 +38,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     ColorsDictionary colorsDictionary;
 
+    public GameContext gameContext;
+
     public Vector2 ZeroPosition
     {
         get { return zeroIndex.transform.position; }
@@ -83,6 +85,7 @@ public class GameplayManager : MonoBehaviour
         CreatePool();
 
         contexts = Contexts.sharedInstance;
+        gameContext = contexts.game;
         systems = CreateSystems(contexts);
         systems.Initialize();
 

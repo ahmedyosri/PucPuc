@@ -36,6 +36,7 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
             dir.Normalize();
 
             primaryBall.isPrimaryBall = false;
+            primaryBall.isReachedTarget = false;
             primaryBall.isBallCollider = true;
             primaryBall.isAddToBoard = true;
             primaryBall.isMoving = true;

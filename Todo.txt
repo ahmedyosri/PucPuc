@@ -11,6 +11,7 @@
 +Impace animations (20/50)
  *Fixed moving system (--/30)
 +Primary ball animations (10/10)
+*Fixed consequtive ball firing (5/20)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
