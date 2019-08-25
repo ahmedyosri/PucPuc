@@ -693,6 +693,7 @@ MonoBehaviour:
   cellLength: 0.88
   aimLine: {fileID: 1302633787}
   ballFiringSpeed: 30
+  ballMergeSpeed: 5
   colorsDictionary: {fileID: 11400000, guid: 533dc721fab1a5a46a5e69b7e3aea568, type: 2}
 --- !u!4 &939658847
 Transform:

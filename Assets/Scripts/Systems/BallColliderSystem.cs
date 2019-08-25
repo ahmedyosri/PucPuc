@@ -14,7 +14,7 @@ public class BallColliderSystem : ReactiveSystem<GameEntity>
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.BoardBall);
+        return context.CreateCollector(GameMatcher.BallCollider);
     }
 
     protected override bool Filter(GameEntity entity)

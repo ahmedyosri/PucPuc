@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Entitas;
 using UnityEngine;
 
@@ -16,11 +17,28 @@ public class BallMergingSystem : IExecuteSystem
     public void Execute()
     {
         GameEntity[] entities = mergingEntities.GetEntities();
-        foreach (GameEntity e in entities)
+
+        if (entities.Length == 0)
         {
-            GameplayManager.Instance.DeleteBall(e.gameObject.gameobject);
-            e.Destroy();
+            return;
         }
+
+        foreach (GameEntity ent in entities)
+        {
+            GameplayManager.Instance.DeleteBall(ent.gameObject.gameobject);
+            ent.Destroy();
+            gameContext.boardManager.mergingEntitiesCount--;
+        }
+
+        if (gameContext.boardManager.mergingEntitiesCount > 0)
+            return;
+
+        // 2- Start merging process
+        GameEntity e = gameContext.GetGroup(GameMatcher.AddToBoard).GetEntities()[0];
+        e.isAddToBoard = false;
+        e.isReachedTarget = false;
+
+        GameUtils.MergeNeighborsOf(e);
     }
 
 }

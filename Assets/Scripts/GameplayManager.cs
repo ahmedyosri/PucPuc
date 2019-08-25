@@ -32,8 +32,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     LineRenderer aimLine;
 
-    [SerializeField]
     public float ballFiringSpeed;
+
+    public float ballMergeSpeed;
 
     [SerializeField]
     ColorsDictionary colorsDictionary;

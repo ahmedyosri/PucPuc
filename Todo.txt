@@ -12,10 +12,12 @@
  *Fixed moving system (--/30)
 +Primary ball animations (10/10)
 *Fixed consequtive ball firing (5/20)
+*Fix bug with impact and falling calculations (wrong balls moves) (--/40)
+*Fixed Merging to balls that can fall (--/70)
+*Fixed instant merging (--/10)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-*Fix bug with impact and falling calculations (wrong balls moves) (--)
 +Add auto level up/down mechanism
 +Add estimated-ball location system 
 +Merge happens to ceiling-connected-ball in cluster

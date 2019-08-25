@@ -33,8 +33,8 @@ public class BallAdditionSystem : ReactiveSystem<GameEntity>
 
             e.isMoving = false;
             e.isReachedTarget = false;
+            e.isBallCollider = true;
 
-            e.ReplaceBoardBall(e.boardBall.boardIdx, e.boardBall.value, e.boardBall.shifted);
             gameContext.boardManager.entities[(int)e.boardBall.boardIdx.x, (int)e.boardBall.boardIdx.y] = e;
         }
     }
