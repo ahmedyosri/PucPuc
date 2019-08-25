@@ -112,6 +112,28 @@ public class GameUtils
         return parents;
     }
 
+    public static List<GameEntity> GetChildrenFor(BoardBall b)
+    {
+        List<GameEntity> children = new List<GameEntity>();
+        List<Vector2> childrenIdxs = b.shifted ? neighborsOfShited : neighborsOfNotShited;
+        childrenIdxs = childrenIdxs.GetRange(4, 2);
+
+        BoardManager boardManager = GameplayManager.Instance.gameContext.boardManager;
+        foreach (Vector2 v in childrenIdxs)
+        {
+            int x = (int)(b.boardIdx.x + v.x);
+            int y = (int)(b.boardIdx.y + v.y);
+
+            if (y < 0 || y >= BoardManager.length || x < 0 || x >= BoardManager.width)
+                continue;
+
+            if (boardManager.entities[x, y] != null)
+                children.Add(boardManager.entities[x, y]);
+        }
+
+        return children;
+    }
+
     public static void MergeNeighborsOf(GameEntity e)
     {
         // 1- Find cluster of the current ball e

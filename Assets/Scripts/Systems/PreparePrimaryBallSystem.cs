@@ -13,7 +13,7 @@ public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.AddToBoard, GameMatcher.ReachedTarget));
+        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Moving));//, GameMatcher.ReachedTarget));
     }
 
     protected override bool Filter(GameEntity entity)
@@ -38,12 +38,12 @@ public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
         newBallEntity.isSecondaryBall = true;
         newBallEntity.ReplaceTargetPositions(30, new List<Vector3>() { GameplayManager.Instance.SecondaryBallPosition.position });
         newBallEntity.isMoving = true;
-        
     }
 
     GameEntity CreateBall(Vector3 newPosition)
     {
         GameEntity e = gameContext.CreateEntity();
+        e.AddBoardBall(Vector2.one * -10, BoardBalancerSystem.nextRecommendedValue, false);
         e.isBall = true;
         e.AddPosition(newPosition);
         return e;

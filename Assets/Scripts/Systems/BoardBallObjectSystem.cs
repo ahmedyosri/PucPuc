@@ -32,8 +32,9 @@ public class BoardBallObjectSystem : ReactiveSystem<GameEntity>
                 Vector3 newPos = GameUtils.WorldPosForBall(e);
                 if (newPos != (Vector3) e.position.pos)
                 {
-                    e.ReplaceTargetPositions(50, new List<Vector3>() { newPos });
+                    e.ReplaceTargetPositions(GameplayManager.Instance.ballMergeSpeed, new List<Vector3>() { newPos });
                     e.isMoving = true;
+                    e.isReachedTarget = false;
                 }
             }
 

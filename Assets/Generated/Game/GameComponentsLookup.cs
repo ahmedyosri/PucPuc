@@ -9,26 +9,28 @@
 public static class GameComponentsLookup {
 
     public const int AddToBoard = 0;
-    public const int BallCollider = 1;
-    public const int Ball = 2;
-    public const int BoardBall = 3;
-    public const int BoardManager = 4;
-    public const int Fall = 5;
-    public const int GameObject = 6;
-    public const int Impacting = 7;
-    public const int MergeTo = 8;
-    public const int Moving = 9;
-    public const int Position = 10;
-    public const int PrimaryBall = 11;
-    public const int ReachedTarget = 12;
-    public const int SecondaryBall = 13;
-    public const int TargetPositions = 14;
-    public const int Velocity = 15;
+    public const int AutoDestroy = 1;
+    public const int BallCollider = 2;
+    public const int Ball = 3;
+    public const int BoardBall = 4;
+    public const int BoardManager = 5;
+    public const int Fall = 6;
+    public const int GameObject = 7;
+    public const int Impacting = 8;
+    public const int MergeTo = 9;
+    public const int Moving = 10;
+    public const int Position = 11;
+    public const int PrimaryBall = 12;
+    public const int ReachedTarget = 13;
+    public const int SecondaryBall = 14;
+    public const int TargetPositions = 15;
+    public const int Velocity = 16;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "AddToBoard",
+        "AutoDestroy",
         "BallCollider",
         "Ball",
         "BoardBall",
@@ -48,6 +50,7 @@ public static class GameComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(AddToBoard),
+        typeof(AutoDestroyComponent),
         typeof(BallColliderComponent),
         typeof(BallComponent),
         typeof(BoardBall),

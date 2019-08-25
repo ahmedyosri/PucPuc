@@ -92,6 +92,12 @@ public class BoardManager : IComponent
     public int mergingEntitiesCount;
 }
 
+[Game]
+public class AutoDestroyComponent : IComponent
+{
+    public float afterSeconds;
+}
+
 [Input, Unique]
 public class MouseLeftComponent : IComponent
 {

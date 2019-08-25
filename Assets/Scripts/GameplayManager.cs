@@ -113,6 +113,22 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyUp(KeyCode.T))
+        {
+            GameEntity[,] ents = gameContext.boardManager.entities;
+            string deb = "";
+            for (int y = 0; y < BoardManager.length; y++)
+            {
+                for (int x = 0; x < BoardManager.width; x++)
+                {
+                    deb += (ents[x, y] == null) ? "X" : ents[x,y].hasBoardBall ? ents[x, y].boardBall.value.ToString() : "?";
+                    deb += " ";
+                }
+                deb += "\n";
+            }
+            Debug.Log(deb);
+        }
+
         systems.Execute();
         systems.Cleanup();
     }
@@ -121,12 +137,13 @@ public class GameplayManager : MonoBehaviour
     {
         GameObject objRef = pooledObjects.Peek();
         pooledObjects.Dequeue();
+        objRef.transform.SetParent(entitiesParent);
         return objRef;
     }
 
     public void DeleteBall(GameObject objRef)
     {
-        objRef.transform.parent = pooledObjsParent;
+        objRef.transform.SetParent(pooledObjsParent);
         objRef.transform.localPosition = Vector3.zero;
         objRef.GetComponent<Collider2D>().enabled = ballPrefab.GetComponent<Collider2D>().enabled;
     }
