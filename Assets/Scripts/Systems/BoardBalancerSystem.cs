@@ -56,12 +56,24 @@ public class BoardBalancerSystem : IExecuteSystem
             }
         }
 
-        if (maxDepth < 3)
+        if (entitiesCount < BoardManager.width * 3 && maxDepth <= 5)
+        {
             ShiftBoardDown();
+        }
+        else if (maxDepth < 3)
+        {
+            ShiftBoardDown();
+        }
         else if (maxDepth > 6)
+        {
             ShiftBoardUp();
+        }
 
         possibleValues.Sort();
+
+        if (possibleValues.Count == 0)
+            possibleValues.Add(1);
+
         int minVal, maxVal;
         minVal = possibleValues[0];
         maxVal = possibleValues[possibleValues.Count - 1];

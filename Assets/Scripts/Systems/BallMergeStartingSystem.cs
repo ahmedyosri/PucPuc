@@ -43,6 +43,7 @@ public class BallMergeStartingSystem : IExecuteSystem
         // 2- Start merging process
         GameEntity e = gameContext.GetGroup(GameMatcher.AddToBoard).GetEntities()[0];
         e.isAddToBoard = false;
+        e.isMoving = false;
         e.isReachedTarget = false;
 
         GameUtils.MergeNeighborsOf(e);

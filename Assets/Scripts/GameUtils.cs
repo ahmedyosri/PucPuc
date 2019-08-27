@@ -61,7 +61,7 @@ public class GameUtils
             foreach (Vector2 v in neighborsList)
             {
                 Vector2 neighborIdx = curr.boardIdx + v;
-                if (Mathf.Min(neighborIdx.x, neighborIdx.y) < 0 || Mathf.Max(neighborIdx.x, neighborIdx.y) >= BoardManager.width)
+                if (Mathf.Min(neighborIdx.x, neighborIdx.y) < 0 || neighborIdx.x >= BoardManager.width || neighborIdx.y >= BoardManager.length)
                     continue;
                 GameEntity neighborEntity = GetEntity(neighborIdx);
                 if (neighborEntity == null)
@@ -229,6 +229,7 @@ public class GameUtils
                 if (tmpEnt.hasFall)
                     continue;
                 gameContext.boardManager.entities[x, y] = null;
+                tmpEnt.isAddToBoard = false;
                 tmpEnt.AddFall(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0, 3), 0));
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
@@ -98,7 +99,7 @@ public class GameplayManager : MonoBehaviour
         pooledObjsParent.position = Vector3.one * -10;
         pooledObjects = new Queue<GameObject>();
 
-        for(int i=0; i<62; i++)
+        for(int i=0; i<BoardManager.width * 8; i++)
         {
             pooledObjects.Enqueue(Instantiate(ballPrefab, pooledObjsParent) as GameObject);
         }
@@ -145,6 +146,8 @@ public class GameplayManager : MonoBehaviour
     {
         objRef.transform.SetParent(pooledObjsParent);
         objRef.transform.localPosition = Vector3.zero;
+        objRef.Unlink();
         objRef.GetComponent<Collider2D>().enabled = ballPrefab.GetComponent<Collider2D>().enabled;
+        pooledObjects.Enqueue(objRef);
     }
 }

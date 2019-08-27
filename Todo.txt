@@ -4,6 +4,7 @@
 *Fix multi collision raytracing (30/30) : Solved by setting proper ball sizes
 +Add merging system (without animations) (60/80)
 +Add merge animation (90/80)
++Primary & seconday ball movements (--/20)
 +Add falling cluster system (30/30)
 +Add number to color(30/20)
 *Isolate primary/secondary ball creation from firing system (20/20)
@@ -15,22 +16,20 @@
 *Fix bug with impact and falling calculations (wrong balls moves) (--/40)
 *Fixed Merging to balls that can fall (--/70)
 *Fixed instant merging (--/10)
++Add auto level up/down mechanism (60/90)
+*Fix consecutive merger weird bug(--/30)
+*Fixed some gameplay bugs (--/10)
+*Modified game balance mechanisms (--/15)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Add auto level up/down mechanism
-+Add estimated-ball location system 
-+Merge happens to ceiling-connected-ball in cluster
+*Fix ball not being shot when aiming to ceiling (20)
+*Fix ball can be added if you slightly aim at the right child, if the right child exists (10)
++Add estimated-ball location system (20)
 +Raycast cutdown
-+Primary & seconday ball movements
-+Add Perfect notification
-+Add scoring system
-+Add sounds
-+Polish UI
-+Add main menu
-*Fix GetTargetIndex
++Add Perfect notification (10)
++Add scoring system (20)
++Add sounds (60)
++Polish UI (60)
++Add main menu (20)
 *All vector2 to vector3
------------------------------------------------------- Total time
-13:00
-18:00
-21:30

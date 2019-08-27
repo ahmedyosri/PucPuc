@@ -87,7 +87,7 @@ public class BoardManager : IComponent
 {
     public GameEntity[,] entities;
     public const int width = 6;
-    public const int length = 10;
+    public const int length = 8;
     public int impactingEntitesCount;
     public int mergingEntitiesCount;
 }

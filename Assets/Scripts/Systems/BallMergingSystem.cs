@@ -34,7 +34,11 @@ public class BallMergingSystem : IExecuteSystem
             return;
 
         // 2- Start merging process
-        GameEntity e = gameContext.GetGroup(GameMatcher.AddToBoard).GetEntities()[0];
+        GameEntity[] addToBoardEntities = gameContext.GetGroup(GameMatcher.AddToBoard).GetEntities();
+        if (addToBoardEntities.Length == 0)
+            return; // It wasn't properly selected, hence was deleted
+
+        GameEntity e = addToBoardEntities[0];
         e.isAddToBoard = false;
         e.isReachedTarget = false;
 
