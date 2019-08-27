@@ -12,7 +12,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
 
     LineRenderer aimLine;
     GameEntity ballEntity;
-    IGroup<GameEntity> ballEntitieGroup;
+    IGroup<GameEntity> ballEntitiesGroup;
 
     public AimVisualizerSystem(Contexts contexts) : base(contexts.input)
     {
@@ -22,7 +22,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
         linePositions = new List<Vector3>();
         ballTargets = new List<Vector3>();
         aimLine = GameplayManager.Instance.AimLine;
-        ballEntitieGroup = contexts.game.GetGroup(GameMatcher.PrimaryBall);
+        ballEntitiesGroup = contexts.game.GetGroup(GameMatcher.PrimaryBall);
     }
 
     protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
@@ -38,6 +38,9 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
     protected override void Execute(List<InputEntity> entities)
     {
         if (gameContext.GetGroup(GameMatcher.Moving).GetEntities().Length > 0)
+            return;
+
+        if (ballEntitiesGroup.GetEntities().Length == 0)
             return;
 
         Vector3 start, end, dir;
@@ -62,7 +65,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             dir.x *= -1;
         }
 
-        ballEntity = ballEntitieGroup.GetEntities()[0];
+        ballEntity = ballEntitiesGroup.GetEntities()[0];
         hit = Physics2D.Raycast(start, dir);
         if (hit.collider.CompareTag("Ball"))
         {
@@ -75,6 +78,21 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             ballEntity.boardBall.boardIdx = tmp.boardIdx;
             ballEntity.boardBall.shifted = tmp.shifted;
             
+            end = GameUtils.WorldPosForBall(ballEntity);
+            linePositions.Add(end);
+            ballTargets.Add(end);
+        }
+        else if(hit.collider.CompareTag("Ceil"))
+        {
+            end = hit.point;
+            linePositions.Add(end);
+            bool isShiftedRow = GameUtils.IsRowShifted(0);
+
+            float hShift = end.x - GameplayManager.Instance.ZeroPosition.x - (isShiftedRow ? 0.5f*GameplayManager.Instance.cellWidth : 0);
+            Vector2 idx = new Vector2((int)(hShift / GameplayManager.Instance.cellWidth), 0);
+
+            ballEntity.boardBall.boardIdx = idx;
+            ballEntity.boardBall.shifted = isShiftedRow;
             end = GameUtils.WorldPosForBall(ballEntity);
             linePositions.Add(end);
             ballTargets.Add(end);

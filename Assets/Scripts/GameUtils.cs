@@ -235,4 +235,22 @@ public class GameUtils
         }
     }
 
+    public static bool IsRowShifted(int idx)
+    {
+        if (idx >= BoardManager.length || idx < 0)
+        {
+            Debug.LogError("Invalid index");
+            return false;
+        }
+
+        GameEntity[,] boardEnts = GameplayManager.Instance.gameContext.boardManager.entities;
+        for (int x = 0; x < BoardManager.width; x++)
+        {
+            if (boardEnts[x, idx] == null)
+                continue;
+            return boardEnts[x, idx].boardBall.shifted;
+        }
+        Debug.LogError("asdasdsad");
+        return false;
+    }
 }

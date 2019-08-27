@@ -93,14 +93,7 @@ public class BoardBalancerSystem : IExecuteSystem
     {
         GameEntity[,] entities = gameContext.boardManager.entities;
 
-        bool isShifted = false;
-        for (int x = 0; x < BoardManager.width; x++)
-        {
-            if (entities[x, 0] == null)
-                continue;
-            isShifted = !entities[x, 0].boardBall.shifted;
-            break;
-        }
+        bool isShifted = !GameUtils.IsRowShifted(0);
 
         for(int y=BoardManager.length-1; y>=1 ; y--)
         {
