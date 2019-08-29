@@ -46,6 +46,7 @@ public class BallMergeStartingSystem : IExecuteSystem
         e.isMoving = false;
         e.isReachedTarget = false;
 
+        gameContext.boardManager.scoreMultiplier = 1;
         GameUtils.MergeNeighborsOf(e);
     }
 }

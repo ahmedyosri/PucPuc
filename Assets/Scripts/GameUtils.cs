@@ -186,6 +186,12 @@ public class GameUtils
             }
         }
 
+        GameplayManager.Instance.AddScore(
+            cluster.Count
+            * gameContext.boardManager.scoreMultiplier
+            * Mathf.Pow(2, e.boardBall.value)
+        );
+
         // 5- Update the maxImpactEntity with new value and mark it as adding to board
         maxImpactEntity.ReplaceBoardBall(maxImpactEntity.boardBall.boardIdx, newVal, maxImpactEntity.boardBall.shifted);
         maxImpactEntity.isReachedTarget = false;
@@ -217,6 +223,8 @@ public class GameUtils
                 reachableEntities.Add(tmpEnt);
         }
 
+        int fallingScore = 0;
+
         for (int x = 0; x < BoardManager.width; x++)
         {
             for (int y = 0; y < BoardManager.length; y++)
@@ -228,11 +236,19 @@ public class GameUtils
                     continue;
                 if (tmpEnt.hasFall)
                     continue;
+                fallingScore += (int)Mathf.Pow(2, tmpEnt.boardBall.value);
                 gameContext.boardManager.entities[x, y] = null;
                 tmpEnt.isAddToBoard = false;
                 tmpEnt.AddFall(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0, 3), 0));
             }
         }
+
+        GameplayManager.Instance.AddScore(
+            fallingScore
+            * gameContext.boardManager.scoreMultiplier
+        );
+
+        gameContext.boardManager.scoreMultiplier++;
     }
 
     public static bool IsRowShifted(int idx)

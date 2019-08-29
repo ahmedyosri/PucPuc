@@ -90,6 +90,7 @@ public class BoardManager : IComponent
     public const int length = 8;
     public int impactingEntitesCount;
     public int mergingEntitiesCount;
+    public int scoreMultiplier;
 }
 
 [Game]

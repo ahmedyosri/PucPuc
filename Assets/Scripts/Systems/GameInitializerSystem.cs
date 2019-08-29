@@ -15,7 +15,7 @@ public class GameInitializerSystem : IInitializeSystem
 
     public void Initialize()
     {
-        gameContext.ReplaceBoardManager(new GameEntity[BoardManager.width, BoardManager.length], 0, 0);
+        gameContext.ReplaceBoardManager(new GameEntity[BoardManager.width, BoardManager.length], 0, 0, 0);
         CreateShootingBalls();
         CreateBoard();
     }

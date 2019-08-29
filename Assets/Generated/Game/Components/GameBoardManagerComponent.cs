@@ -12,22 +12,22 @@ public partial class GameContext {
     public BoardManager boardManager { get { return boardManagerEntity.boardManager; } }
     public bool hasBoardManager { get { return boardManagerEntity != null; } }
 
-    public GameEntity SetBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount) {
+    public GameEntity SetBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount, int newScoreMultiplier) {
         if (hasBoardManager) {
             throw new Entitas.EntitasException("Could not set BoardManager!\n" + this + " already has an entity with BoardManager!",
                 "You should check if the context already has a boardManagerEntity before setting it or use context.ReplaceBoardManager().");
         }
         var entity = CreateEntity();
-        entity.AddBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount);
+        entity.AddBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount, newScoreMultiplier);
         return entity;
     }
 
-    public void ReplaceBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount) {
+    public void ReplaceBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount, int newScoreMultiplier) {
         var entity = boardManagerEntity;
         if (entity == null) {
-            entity = SetBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount);
+            entity = SetBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount, newScoreMultiplier);
         } else {
-            entity.ReplaceBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount);
+            entity.ReplaceBoardManager(newEntities, newImpactingEntitesCount, newMergingEntitiesCount, newScoreMultiplier);
         }
     }
 
@@ -49,21 +49,23 @@ public partial class GameEntity {
     public BoardManager boardManager { get { return (BoardManager)GetComponent(GameComponentsLookup.BoardManager); } }
     public bool hasBoardManager { get { return HasComponent(GameComponentsLookup.BoardManager); } }
 
-    public void AddBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount) {
+    public void AddBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount, int newScoreMultiplier) {
         var index = GameComponentsLookup.BoardManager;
         var component = (BoardManager)CreateComponent(index, typeof(BoardManager));
         component.entities = newEntities;
         component.impactingEntitesCount = newImpactingEntitesCount;
         component.mergingEntitiesCount = newMergingEntitiesCount;
+        component.scoreMultiplier = newScoreMultiplier;
         AddComponent(index, component);
     }
 
-    public void ReplaceBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount) {
+    public void ReplaceBoardManager(GameEntity[,] newEntities, int newImpactingEntitesCount, int newMergingEntitiesCount, int newScoreMultiplier) {
         var index = GameComponentsLookup.BoardManager;
         var component = (BoardManager)CreateComponent(index, typeof(BoardManager));
         component.entities = newEntities;
         component.impactingEntitesCount = newImpactingEntitesCount;
         component.mergingEntitiesCount = newMergingEntitiesCount;
+        component.scoreMultiplier = newScoreMultiplier;
         ReplaceComponent(index, component);
     }
 

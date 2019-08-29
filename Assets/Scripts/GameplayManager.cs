@@ -40,6 +40,11 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     ColorsDictionary colorsDictionary;
 
+    [SerializeField]
+    ScoreController scoreController;
+
+    float currentScore;
+
     public GameContext gameContext;
 
     public Vector2 ZeroPosition
@@ -83,6 +88,9 @@ public class GameplayManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentScore = 0;
+        scoreController.UpdateScore(0);
+
         entitiesParent = new GameObject("EntitiesParent").transform;
         CreatePool();
 
@@ -149,5 +157,11 @@ public class GameplayManager : MonoBehaviour
         objRef.Unlink();
         objRef.GetComponent<Collider2D>().enabled = ballPrefab.GetComponent<Collider2D>().enabled;
         pooledObjects.Enqueue(objRef);
+    }
+
+    public void AddScore(float addedScore)
+    {
+        currentScore += (int) Mathf.Ceil(addedScore);
+        scoreController.UpdateScore(currentScore);
     }
 }
