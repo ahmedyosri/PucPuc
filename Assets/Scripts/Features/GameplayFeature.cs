@@ -13,7 +13,7 @@ public class GameplayFeature : Feature
 
         Add(new FireBallSystem(contexts));
         Add(new BoardBallObjectSystem(contexts));
-        Add(new AimVisualizerSystem(contexts));
+        Add(new AimSystem(contexts));
         Add(new BallColliderSystem(contexts));
 
         Add(new BallAdditionSystem(contexts));
@@ -23,5 +23,6 @@ public class GameplayFeature : Feature
         Add(new BoardBalancerSystem(contexts));
         
         Add(new PreparePrimaryBallSystem(contexts));
+        Add(new LineModifierSystem(contexts));
     }
 }

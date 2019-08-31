@@ -4,7 +4,7 @@ using Entitas;
 using Entitas.Unity;
 using UnityEngine;
 
-public class AimVisualizerSystem : ReactiveSystem<InputEntity>
+public class AimSystem : ReactiveSystem<InputEntity>
 {
     InputContext inputContext;
     GameContext gameContext;
@@ -13,8 +13,9 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
     LineRenderer aimLine;
     GameEntity ballEntity;
     IGroup<GameEntity> ballEntitiesGroup;
+    GameObject estimatedBall;
 
-    public AimVisualizerSystem(Contexts contexts) : base(contexts.input)
+    public AimSystem(Contexts contexts) : base(contexts.input)
     {
         inputContext = contexts.input;
         gameContext = contexts.game;
@@ -23,6 +24,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
         ballTargets = new List<Vector3>();
         aimLine = GameplayManager.Instance.AimLine;
         ballEntitiesGroup = contexts.game.GetGroup(GameMatcher.PrimaryBall);
+        estimatedBall = GameplayManager.Instance.estimatedBall;
     }
 
     protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
@@ -63,6 +65,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             linePositions.Add(start);
             ballTargets.Add(start);
             dir.x *= -1;
+            estimatedBall.transform.position = -10 * Vector3.one;
         }
 
         ballEntity = ballEntitiesGroup.GetEntities()[0];
@@ -79,6 +82,7 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             ballEntity.boardBall.shifted = tmp.shifted;
             
             end = GameUtils.WorldPosForBall(ballEntity);
+            estimatedBall.transform.position = end;
             linePositions.Add(end);
             ballTargets.Add(end);
         }
@@ -94,8 +98,16 @@ public class AimVisualizerSystem : ReactiveSystem<InputEntity>
             ballEntity.boardBall.boardIdx = idx;
             ballEntity.boardBall.shifted = isShiftedRow;
             end = GameUtils.WorldPosForBall(ballEntity);
+            estimatedBall.transform.position = end;
             linePositions.Add(end);
             ballTargets.Add(end);
+        }
+        else
+        {
+            linePositions.Clear();
+            ballTargets.Clear();
+            UpdateAimLine();
+            return;
         }
 
         ballEntity.ReplaceTargetPositions(GameplayManager.Instance.ballFiringSpeed, ballTargets);

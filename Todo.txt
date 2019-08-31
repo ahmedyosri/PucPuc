@@ -23,10 +23,11 @@
 *Fix ball not being shot when aiming to ceiling (20/40)
 *Fix ball can be added if you slightly aim at the right child, if the right child exists (10/5)
 +Add scoring system (20/25)
++Animated line renderer (20 + 60 rebrushing on shaders)
++Add estimated-ball location system (20/20)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Add estimated-ball location system (20)
 +Raycast cutdown
 +Add Perfect notification (10)
 +Add sounds (60)

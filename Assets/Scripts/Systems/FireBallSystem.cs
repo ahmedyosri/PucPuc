@@ -28,7 +28,13 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
         GameEntity[] primaryBalls = gameContext.GetGroup(GameMatcher.PrimaryBall).GetEntities();
         if (primaryBalls.Length == 0)
             return;
+
         primaryBall = primaryBalls[0];
+
+        if (primaryBall.hasTargetPositions && primaryBall.targetPositions.positions.Count == 0)
+            return;
+
+        GameplayManager.Instance.estimatedBall.transform.position = Vector3.one * -10;
 
         foreach (var e in entities)
         {

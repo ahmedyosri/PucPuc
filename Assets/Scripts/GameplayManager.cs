@@ -33,6 +33,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     LineRenderer aimLine;
 
+    public GameObject estimatedBall;
+
     public float ballFiringSpeed;
 
     public float ballMergeSpeed;

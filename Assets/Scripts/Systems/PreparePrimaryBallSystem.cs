@@ -6,6 +6,7 @@ using UnityEngine;
 public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
 {
     GameContext gameContext;
+
     public PreparePrimaryBallSystem(Contexts contexts) : base(contexts.game)
     {
         gameContext = contexts.game;
@@ -27,10 +28,12 @@ public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
         if (primaryBalls.Length > 0)
             return;
 
+
         GameEntity secondaryBall = gameContext.GetGroup(GameMatcher.SecondaryBall).GetEntities()[0];
         secondaryBall.isSecondaryBall = false;
         secondaryBall.isPrimaryBall = true;
 
+        
         secondaryBall.ReplaceTargetPositions(30, new List<Vector3>() { GameplayManager.Instance.PrimaryBallPosition.position });
         secondaryBall.isMoving = true;
 
