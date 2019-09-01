@@ -91,6 +91,7 @@ public class BoardManager : IComponent
     public int impactingEntitesCount;
     public int mergingEntitiesCount;
     public int scoreMultiplier;
+    public int currentBallsCount;
 }
 
 [Game]

@@ -25,6 +25,7 @@
 +Add scoring system (20/25)
 +Animated line renderer (20 + 60 rebrushing on shaders)
 +Add estimated-ball location system (20/20)
++Add main menu (120) (tried on different styles)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
@@ -32,5 +33,4 @@
 +Add Perfect notification (10)
 +Add sounds (60)
 +Polish UI (60)
-+Add main menu (20)
 *All vector2 to vector3

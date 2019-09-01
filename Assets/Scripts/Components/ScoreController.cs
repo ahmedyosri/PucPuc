@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ScoreController : MonoBehaviour
 {
     [SerializeField]
+    CanvasGroup scoreGroup;
+    [SerializeField]
     Text scoreText;
 
     [SerializeField]
@@ -21,8 +23,11 @@ public class ScoreController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if(scoreGroup.alpha < 1)
+            scoreGroup.alpha += 2 * Time.fixedDeltaTime;
+
         if (currentValue == targetValue)
             return;
 
