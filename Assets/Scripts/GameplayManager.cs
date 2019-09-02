@@ -33,6 +33,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     LineRenderer aimLine;
 
+    [SerializeField]
+    Animator gameplayUiAnimator;
+
     public GameObject estimatedBall;
 
     public float ballFiringSpeed;
@@ -44,8 +47,6 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField]
     ScoreController scoreController;
-
-    float currentScore;
 
     public GameContext gameContext;
 
@@ -74,6 +75,8 @@ public class GameplayManager : MonoBehaviour
         get { return colorsDictionary; }
     }
 
+    bool isGamePaused;
+
     public static GameplayManager Instance;
 
     private Systems systems;
@@ -90,8 +93,9 @@ public class GameplayManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentScore = 0;
-        scoreController.UpdateScore(0);
+        scoreController.AddScore(0);
+
+        isGamePaused = false;
 
         entitiesParent = new GameObject("EntitiesParent").transform;
         CreatePool();
@@ -101,6 +105,11 @@ public class GameplayManager : MonoBehaviour
         systems = CreateSystems(contexts);
         systems.Initialize();
 
+    }
+
+    public void OnBoardCleared()
+    {
+        gameplayUiAnimator.SetTrigger("OnPerfect");
     }
 
     private void CreatePool()
@@ -124,21 +133,8 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.T))
-        {
-            GameEntity[,] ents = gameContext.boardManager.entities;
-            string deb = "";
-            for (int y = 0; y < BoardManager.length; y++)
-            {
-                for (int x = 0; x < BoardManager.width; x++)
-                {
-                    deb += (ents[x, y] == null) ? "X" : ents[x,y].hasBoardBall ? ents[x, y].boardBall.value.ToString() : "?";
-                    deb += " ";
-                }
-                deb += "\n";
-            }
-            Debug.Log(deb);
-        }
+        if (isGamePaused)
+            return;
 
         systems.Execute();
         systems.Cleanup();
@@ -163,7 +159,22 @@ public class GameplayManager : MonoBehaviour
 
     public void AddScore(float addedScore)
     {
-        currentScore += (int) Mathf.Ceil(addedScore);
-        scoreController.UpdateScore(currentScore);
+        int tmpScore = (int) Mathf.Ceil(addedScore);
+        scoreController.AddScore(tmpScore);
+    }
+
+    public void OnGamePaused()
+    {
+        isGamePaused = true;
+    }
+
+    public void OnGameResumed()
+    {
+        isGamePaused = false;
+    }
+
+    public void OnGameQuit()
+    {
+        Application.Quit();
     }
 }

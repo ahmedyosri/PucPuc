@@ -56,6 +56,11 @@ public class BoardBalancerSystem : IExecuteSystem
             }
         }
 
+        if(entitiesCount == 0)
+        {
+            GameplayManager.Instance.OnBoardCleared();
+        }
+
         if (entitiesCount < BoardManager.width * 3 && maxDepth <= 5)
         {
             ShiftBoardDown();
@@ -80,10 +85,6 @@ public class BoardBalancerSystem : IExecuteSystem
         if(minVal > 1)
         {
             possibleValues.Add(minVal - 1);
-        }
-        if(maxVal < 11)
-        {
-            possibleValues.Add(maxVal + 1);
         }
 
         nextRecommendedValue = possibleValues[Random.Range(0, possibleValues.Count)];
