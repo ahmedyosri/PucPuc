@@ -36,9 +36,9 @@
 +Rotation for falling balls (--/10)
 +Polished explosion (--/15)
 +Added explosion PS (--/5)
++Add sounds (60/120)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Add sounds (60)
-+Polish UI (60)
+*Fix a merging bug (15)
 *All vector2 to vector3

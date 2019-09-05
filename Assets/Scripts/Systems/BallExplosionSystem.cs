@@ -44,6 +44,8 @@ public class BallExplosionSystem : ReactiveSystem<GameEntity>
             e.isExploding = true;
             return;
         }
+        SoundManager.Instance.explosionSound.Play();
+
         float addedScore = 2000;
         var ps = GameplayManager.Instance.explosionPS;
         ps.transform.position = e.position.pos;

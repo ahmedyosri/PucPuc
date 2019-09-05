@@ -46,8 +46,10 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
             primaryBall.isBallCollider = true;
             primaryBall.isAddToBoard = true;
             primaryBall.isMoving = true;
-
+            primaryBall.gameObject.gameobject.GetComponent<TrailRenderer>().enabled = true;
             GameplayManager.Instance.AimLine.positionCount = 0;
+
+            SoundManager.Instance.fireballSound.Play();
         }
         gameContext.isReady = false;
     }

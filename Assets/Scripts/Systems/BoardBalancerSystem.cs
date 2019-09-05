@@ -16,6 +16,18 @@ public class BoardBalancerSystem : IExecuteSystem
     private int boardAvgValue;
     private int boardMeanValue;
 
+    //Board size control
+    readonly int maxBoardDepth = 6;
+    readonly int minBoardDepth = 3;
+
+    // row generation props
+    readonly float fixedNegativeRad = 2.0f;
+    readonly float scoreNegativeImpactRad = 3.0f;
+    readonly float fixedPositiveRad = 2.0f;
+    readonly float scorePositiveImpactRad = 4.0f;
+    readonly float effectiveScoreScale = 10000.0f;
+    readonly float chanceToGetTwoSimilarBalls = 0.1f;
+
     public BoardBalancerSystem(Contexts contexts)
     {
         gameContext = contexts.game;
@@ -36,7 +48,7 @@ public class BoardBalancerSystem : IExecuteSystem
         if (isAnyAnimating)
             return;
 
-        int maxDepth = 0;
+        int currDepth = 0;
         int entitiesCount = 0;
         GameEntity[,] entities = gameContext.boardManager.entities;
         List<int> possibleValues = new List<int>();
@@ -50,7 +62,7 @@ public class BoardBalancerSystem : IExecuteSystem
                 if (entities[x, y] == null)
                     continue;
 
-                maxDepth = Mathf.Max(maxDepth, y);
+                currDepth = Mathf.Max(currDepth, y);
 
                 entitiesCount++;
                 boardAvgValue += entities[x, y].boardBall.value;
@@ -60,7 +72,6 @@ public class BoardBalancerSystem : IExecuteSystem
                     possibleValues.Add(entities[x, y].boardBall.value);
             }
         }
-
 
         if (entitiesCount == 0)
         {
@@ -87,18 +98,18 @@ public class BoardBalancerSystem : IExecuteSystem
         {
             possibleValues.Add(minVal - 1);
         }
-        nextRecommendedValue = possibleValues[Random.Range(0, possibleValues.Count)]+3;
+        nextRecommendedValue = possibleValues[Random.Range(0, possibleValues.Count)];
         nextRecommendedValue = Mathf.Clamp(nextRecommendedValue, 1, 10);
 
-        if (entitiesCount < BoardManager.width * 3 && maxDepth <= 5)
+        if (entitiesCount < BoardManager.width * 3 && currDepth <= 5)
         {
             ShiftBoardDown();
         }
-        else if (maxDepth < 3)
+        else if (currDepth < minBoardDepth)
         {
             ShiftBoardDown();
         }
-        else if (maxDepth > 6)
+        else if (currDepth > maxBoardDepth)
         {
             ShiftBoardUp();
         }
@@ -131,20 +142,28 @@ public class BoardBalancerSystem : IExecuteSystem
         }
 
         // How aggressive each new row is
-        float scoreMeter = Mathf.Clamp(GameplayManager.Instance.CurrentScore, 0, 500);
-        scoreMeter /= 500;
-        int avgMin = Mathf.Max(1, boardMeanValue - (int)(3.0f*(1.0f-scoreMeter)));
-        int avgMax = Mathf.Min(10, boardMeanValue + (int)(9.0f*scoreMeter) + 2);
+        float scoreMeter = Mathf.Clamp(GameplayManager.Instance.CurrentScore, 0, effectiveScoreScale) / effectiveScoreScale;
+        int avgMin = Mathf.Max(1, boardMeanValue - (int)(scoreNegativeImpactRad*(1.0f-scoreMeter) - fixedNegativeRad));
+        int avgMax = Mathf.Min(10, boardMeanValue + (int)(scorePositiveImpactRad * scoreMeter + fixedPositiveRad));
+
+        int lastValue = Random.Range(avgMin, avgMax);
+        int newVal = lastValue;
         Debug.Log(boardMeanValue + " | " + avgMin.ToString() + " | " + avgMax.ToString());
 
         for(int x=0; x<BoardManager.width; x++)
         {
+            while (newVal == lastValue && Random.Range(0.0f, 1.0f) > chanceToGetTwoSimilarBalls)
+            {
+                newVal = Random.Range(avgMin, avgMax);
+            }
+            lastValue = newVal;
+
             var newEntity = gameContext.CreateEntity();
             newEntity.isBall = true;
             newEntity.isBallCollider = true;
             newEntity.AddBoardBall(
                 new Vector2(x, 0),
-                Random.Range(avgMin, avgMax),
+                newVal,
                 isShifted
             );
             var newPos = GameUtils.WorldPosForBall(newEntity) + Vector3.up;

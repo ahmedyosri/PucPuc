@@ -115,12 +115,14 @@ public class GameplayManager : MonoBehaviour
         systems = CreateSystems(contexts);
         systems.Initialize();
 
+        SoundManager.Instance.gamestartSound.Play();
     }
 
     public void OnBoardCleared()
     {
         gameplayUiAnimator.SetTrigger("OnPerfect");
         AddScore(1000);
+        SoundManager.Instance.perfectSound.Play();
     }
 
     private void CreatePool()
@@ -149,7 +151,8 @@ public class GameplayManager : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.T))
         {
-            gameContext.boardManager.entities[2, 3].isExploding = true;
+            //gameContext.boardManager.entities[2, 3].isExploding = true;
+            //OnBoardCleared();
         }
 
         systems.Execute();

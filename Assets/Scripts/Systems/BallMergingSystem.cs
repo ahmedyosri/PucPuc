@@ -33,6 +33,8 @@ public class BallMergingSystem : IExecuteSystem
         if (gameContext.boardManager.mergingEntitiesCount > 0)
             return;
 
+        SoundManager.Instance.collisionSound.Play();
+
         // 2- Start merging process
         GameEntity[] addToBoardEntities = gameContext.GetGroup(GameMatcher.AddToBoard).GetEntities();
         if (addToBoardEntities.Length == 0)

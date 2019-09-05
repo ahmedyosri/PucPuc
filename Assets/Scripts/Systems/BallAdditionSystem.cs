@@ -28,8 +28,10 @@ public class BallAdditionSystem : ReactiveSystem<GameEntity>
     {
         foreach (GameEntity e in entities)
         {
-            if(e.isReachedTarget)
+            if (e.isReachedTarget)
+            {
                 ApplyImpact(e);
+            }
 
             e.isMoving = false;
             e.isReachedTarget = false;

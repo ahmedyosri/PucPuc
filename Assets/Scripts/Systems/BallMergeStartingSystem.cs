@@ -37,6 +37,7 @@ public class BallMergeStartingSystem : IExecuteSystem
         {
             entity.isImpacting = false;
             entity.isReachedTarget = false;
+            entity.gameObject.gameobject.GetComponent<TrailRenderer>().enabled = false;
         }
         gameContext.boardManager.impactingEntitesCount = 0;
 
