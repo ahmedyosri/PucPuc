@@ -35,6 +35,7 @@
 *Polished fonts (--/10)
 +Rotation for falling balls (--/10)
 +Polished explosion (--/15)
++Added explosion PS (--/5)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 

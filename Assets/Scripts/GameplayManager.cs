@@ -36,6 +36,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     Animator gameplayUiAnimator;
 
+    public ParticleSystem explosionPS;
+
     public GameObject estimatedBall;
 
     public float ballFiringSpeed;

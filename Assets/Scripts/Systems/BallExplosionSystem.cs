@@ -45,14 +45,8 @@ public class BallExplosionSystem : ReactiveSystem<GameEntity>
             return;
         }
         float addedScore = 2000;
-
-        ParticleSystem ps = e.gameObject.gameobject.GetComponent<ParticleSystem>();
-        var velLimit = ps.limitVelocityOverLifetime;
-        velLimit.enabled = false;
-        var mainModule = ps.main;
-        mainModule.startSpeed = 20;
-        mainModule.startSize = 1.0f;
-        mainModule.startLifetime = 0.5f;
+        var ps = GameplayManager.Instance.explosionPS;
+        ps.transform.position = e.position.pos;
         ps.Play();
 
         GameEntity[,] boardEntities = gameContext.boardManager.entities;
