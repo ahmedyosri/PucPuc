@@ -25,6 +25,7 @@ public class BallMergingSystem : IExecuteSystem
 
         foreach (GameEntity ent in entities)
         {
+            ent.gameObject.gameobject.GetComponent<TrailRenderer>().enabled = false;
             GameplayManager.Instance.DeleteBall(ent.gameObject.gameobject);
             ent.Destroy();
             gameContext.boardManager.mergingEntitiesCount--;
