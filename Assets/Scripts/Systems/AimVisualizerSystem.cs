@@ -59,7 +59,7 @@ public class AimSystem : ReactiveSystem<InputEntity>
         linePositions.Add(start);
 
         hit = Physics2D.Raycast(start, dir);
-        if (hit.collider.CompareTag("Border"))
+        if (hit.collider && hit.collider.CompareTag("Border"))
         {
             start += dir * hit.distance*0.98f;
             linePositions.Add(start);
@@ -70,7 +70,7 @@ public class AimSystem : ReactiveSystem<InputEntity>
 
         ballEntity = ballEntitiesGroup.GetEntities()[0];
         hit = Physics2D.Raycast(start, dir);
-        if (hit.collider.CompareTag("Ball"))
+        if (hit.collider && hit.collider.CompareTag("Ball"))
         {
             end = hit.point;
             linePositions.Add(end);
@@ -86,7 +86,7 @@ public class AimSystem : ReactiveSystem<InputEntity>
             linePositions.Add(end);
             ballTargets.Add(end);
         }
-        else if(hit.collider.CompareTag("Ceil"))
+        else if(hit.collider && hit.collider.CompareTag("Ceil"))
         {
             end = hit.point;
             linePositions.Add(end);

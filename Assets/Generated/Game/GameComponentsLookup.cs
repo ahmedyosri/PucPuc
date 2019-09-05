@@ -14,19 +14,21 @@ public static class GameComponentsLookup {
     public const int Ball = 3;
     public const int BoardBall = 4;
     public const int BoardManager = 5;
-    public const int Fall = 6;
-    public const int GameObject = 7;
-    public const int Impacting = 8;
-    public const int MergeTo = 9;
-    public const int Moving = 10;
-    public const int Position = 11;
-    public const int PrimaryBall = 12;
-    public const int ReachedTarget = 13;
-    public const int SecondaryBall = 14;
-    public const int TargetPositions = 15;
-    public const int Velocity = 16;
+    public const int Exploding = 6;
+    public const int Fall = 7;
+    public const int GameObject = 8;
+    public const int Impacting = 9;
+    public const int MergeTo = 10;
+    public const int Moving = 11;
+    public const int Position = 12;
+    public const int PrimaryBall = 13;
+    public const int ReachedTarget = 14;
+    public const int Ready = 15;
+    public const int SecondaryBall = 16;
+    public const int TargetPositions = 17;
+    public const int Velocity = 18;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 19;
 
     public static readonly string[] componentNames = {
         "AddToBoard",
@@ -35,6 +37,7 @@ public static class GameComponentsLookup {
         "Ball",
         "BoardBall",
         "BoardManager",
+        "Exploding",
         "Fall",
         "GameObject",
         "Impacting",
@@ -43,6 +46,7 @@ public static class GameComponentsLookup {
         "Position",
         "PrimaryBall",
         "ReachedTarget",
+        "Ready",
         "SecondaryBall",
         "TargetPositions",
         "Velocity"
@@ -55,6 +59,7 @@ public static class GameComponentsLookup {
         typeof(BallComponent),
         typeof(BoardBall),
         typeof(BoardManager),
+        typeof(Exploding),
         typeof(Fall),
         typeof(GameObjectComponent),
         typeof(ImpactingComponent),
@@ -63,6 +68,7 @@ public static class GameComponentsLookup {
         typeof(PositionComponent),
         typeof(PrimaryBall),
         typeof(ReachedTargetComponent),
+        typeof(ReadyComponent),
         typeof(SecondaryBall),
         typeof(TargetPositionsComponent),
         typeof(VelocityComponent)

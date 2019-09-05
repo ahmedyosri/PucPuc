@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,8 @@ public class BoardBalancerSystem : IExecuteSystem
     IGroup<GameEntity> movingEntitiesGroup;
 
     public static int nextRecommendedValue;
+    private int boardAvgValue;
+    private int boardMeanValue;
 
     public BoardBalancerSystem(Contexts contexts)
     {
@@ -34,12 +37,13 @@ public class BoardBalancerSystem : IExecuteSystem
             return;
 
         int maxDepth = 0;
-        int avgValue = 0;
         int entitiesCount = 0;
         GameEntity[,] entities = gameContext.boardManager.entities;
         List<int> possibleValues = new List<int>();
+        HashSet<int> boardUniqueValues = new HashSet<int>();
+        boardAvgValue = 0;
 
-        for(int x=0; x<BoardManager.width; x++)
+        for (int x=0; x<BoardManager.width; x++)
         {
             for(int y=0; y<BoardManager.length; y++)
             {
@@ -49,17 +53,42 @@ public class BoardBalancerSystem : IExecuteSystem
                 maxDepth = Mathf.Max(maxDepth, y);
 
                 entitiesCount++;
-                avgValue += entities[x, y].boardBall.value;
+                boardAvgValue += entities[x, y].boardBall.value;
+                boardUniqueValues.Add(entities[x, y].boardBall.value);
 
                 if (GameUtils.GetChildrenFor(entities[x, y].boardBall).Count < 2)
                     possibleValues.Add(entities[x, y].boardBall.value);
             }
         }
 
-        if(entitiesCount == 0)
+
+        if (entitiesCount == 0)
         {
             GameplayManager.Instance.OnBoardCleared();
+            boardAvgValue = 1;
         }
+        else
+        {
+            boardAvgValue /= entitiesCount;
+            List<int> uniqueList = boardUniqueValues.ToList();
+            boardMeanValue = uniqueList[uniqueList.Count / 2];
+        }
+
+        if (possibleValues.Count == 0)
+        {
+            possibleValues.Add(1);
+        }
+        possibleValues.Sort();
+
+        int minVal, maxVal;
+        minVal = possibleValues[0];
+        maxVal = possibleValues[possibleValues.Count - 1];
+        if (minVal > 1)
+        {
+            possibleValues.Add(minVal - 1);
+        }
+        nextRecommendedValue = possibleValues[Random.Range(0, possibleValues.Count)]+3;
+        nextRecommendedValue = Mathf.Clamp(nextRecommendedValue, 1, 10);
 
         if (entitiesCount < BoardManager.width * 3 && maxDepth <= 5)
         {
@@ -73,21 +102,10 @@ public class BoardBalancerSystem : IExecuteSystem
         {
             ShiftBoardUp();
         }
-
-        possibleValues.Sort();
-
-        if (possibleValues.Count == 0)
-            possibleValues.Add(1);
-
-        int minVal, maxVal;
-        minVal = possibleValues[0];
-        maxVal = possibleValues[possibleValues.Count - 1];
-        if(minVal > 1)
+        else
         {
-            possibleValues.Add(minVal - 1);
+            gameContext.isReady = true;
         }
-
-        nextRecommendedValue = possibleValues[Random.Range(0, possibleValues.Count)];
     }
 
     private void ShiftBoardDown()
@@ -112,6 +130,13 @@ public class BoardBalancerSystem : IExecuteSystem
             }
         }
 
+        // How aggressive each new row is
+        float scoreMeter = Mathf.Clamp(GameplayManager.Instance.CurrentScore, 0, 500);
+        scoreMeter /= 500;
+        int avgMin = Mathf.Max(1, boardMeanValue - (int)(3.0f*(1.0f-scoreMeter)));
+        int avgMax = Mathf.Min(10, boardMeanValue + (int)(9.0f*scoreMeter) + 2);
+        Debug.Log(boardMeanValue + " | " + avgMin.ToString() + " | " + avgMax.ToString());
+
         for(int x=0; x<BoardManager.width; x++)
         {
             var newEntity = gameContext.CreateEntity();
@@ -119,7 +144,7 @@ public class BoardBalancerSystem : IExecuteSystem
             newEntity.isBallCollider = true;
             newEntity.AddBoardBall(
                 new Vector2(x, 0),
-                Random.Range(1, 5),
+                Random.Range(avgMin, avgMax),
                 isShifted
             );
             var newPos = GameUtils.WorldPosForBall(newEntity) + Vector3.up;

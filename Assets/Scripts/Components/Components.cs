@@ -80,6 +80,13 @@ public class MergeTo : IComponent
 public class Fall : IComponent
 {
     public Vector3 initialForce;
+    public float gravityMultiplier = 1;
+}
+
+[Game]
+public class Exploding : IComponent
+{
+
 }
 
 [Game, Unique]
@@ -91,13 +98,17 @@ public class BoardManager : IComponent
     public int impactingEntitesCount;
     public int mergingEntitiesCount;
     public int scoreMultiplier;
-    public int currentBallsCount;
 }
 
 [Game]
 public class AutoDestroyComponent : IComponent
 {
     public float afterSeconds;
+}
+
+[Game, Unique]
+public class ReadyComponent : IComponent
+{
 }
 
 [Input, Unique]

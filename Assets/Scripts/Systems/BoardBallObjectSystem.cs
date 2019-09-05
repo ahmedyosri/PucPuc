@@ -38,7 +38,8 @@ public class BoardBallObjectSystem : ReactiveSystem<GameEntity>
                 }
             }
 
-            string valText = Mathf.Pow(2, e.boardBall.value).ToString();
+            int val = (int) Mathf.Pow(2, e.boardBall.value);
+            string valText = e.boardBall.value < 10 ? val.ToString() : string.Format("{0}K", val/1000) ;
             e.gameObject.gameobject.GetComponentInChildren<TextMeshPro>().SetText(valText);
             e.gameObject.gameobject.GetComponent<SpriteRenderer>().color = GameUtils.GetColor(e.boardBall.value);
         }

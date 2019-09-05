@@ -49,6 +49,7 @@ public class FireBallSystem : ReactiveSystem<InputEntity>
 
             GameplayManager.Instance.AimLine.positionCount = 0;
         }
+        gameContext.isReady = false;
     }
 
 }

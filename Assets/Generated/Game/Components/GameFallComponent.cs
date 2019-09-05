@@ -11,17 +11,19 @@ public partial class GameEntity {
     public Fall fall { get { return (Fall)GetComponent(GameComponentsLookup.Fall); } }
     public bool hasFall { get { return HasComponent(GameComponentsLookup.Fall); } }
 
-    public void AddFall(UnityEngine.Vector3 newInitialForce) {
+    public void AddFall(UnityEngine.Vector3 newInitialForce, float newGravityMultiplier) {
         var index = GameComponentsLookup.Fall;
         var component = (Fall)CreateComponent(index, typeof(Fall));
         component.initialForce = newInitialForce;
+        component.gravityMultiplier = newGravityMultiplier;
         AddComponent(index, component);
     }
 
-    public void ReplaceFall(UnityEngine.Vector3 newInitialForce) {
+    public void ReplaceFall(UnityEngine.Vector3 newInitialForce, float newGravityMultiplier) {
         var index = GameComponentsLookup.Fall;
         var component = (Fall)CreateComponent(index, typeof(Fall));
         component.initialForce = newInitialForce;
+        component.gravityMultiplier = newGravityMultiplier;
         ReplaceComponent(index, component);
     }
 

@@ -19,6 +19,14 @@ public class ScoreController : MonoBehaviour
     float targetValue;
     float topScore;
 
+    public int CurrentScore
+    {
+        get
+        {
+            return (int) targetValue;
+        }
+     }
+
     // Start is called before the first frame update
     void Start()
     {

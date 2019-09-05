@@ -170,6 +170,10 @@ public class GameUtils
             {
                 maxImpact = tmpCluster.Count;
                 maxImpactEntity = clusterEntity;
+                if(clusterEntity == null)
+                {
+                    Debug.Log("Apparently it was assigned to null, idx");
+                }
             }
         }
 
@@ -181,6 +185,10 @@ public class GameUtils
                 if (ent != e)
                 {
                     maxImpactEntity = ent;
+                    if (maxImpactEntity == null)
+                    {
+                        Debug.Log("Apparently f tany marra bazet");
+                    }
                     break;
                 }
             }
@@ -208,9 +216,25 @@ public class GameUtils
             clusterEntity.AddMergeTo(maxImpactEntity);
             clusterEntity.isReachedTarget = false;
             clusterEntity.isMoving = true;
+            clusterEntity.gameObject.gameobject.GetComponent<ParticleSystem>().Play();
             gameContext.boardManager.entities[(int)clusterEntity.boardBall.boardIdx.x, (int)clusterEntity.boardBall.boardIdx.y] = null;
             gameContext.boardManager.mergingEntitiesCount++;
         }
+
+        if (newVal == 11)
+        {
+            maxImpactEntity.isExploding = true;
+            return;
+        }
+
+        CheckForFallingEntities();
+
+        gameContext.boardManager.scoreMultiplier++;
+    }
+
+    public static void CheckForFallingEntities()
+    {
+        GameContext gameContext = GameplayManager.Instance.gameContext;
 
         // 8- Find entities that are reachable from Ceiling and mark ALL OTHERS to fall
         HashSet<GameEntity> reachableEntities = new HashSet<GameEntity>();
@@ -239,7 +263,7 @@ public class GameUtils
                 fallingScore += (int)Mathf.Pow(2, tmpEnt.boardBall.value);
                 gameContext.boardManager.entities[x, y] = null;
                 tmpEnt.isAddToBoard = false;
-                tmpEnt.AddFall(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0, 3), 0));
+                tmpEnt.AddFall(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0, 3), 0), 1);
             }
         }
 
@@ -247,8 +271,6 @@ public class GameUtils
             fallingScore
             * gameContext.boardManager.scoreMultiplier
         );
-
-        gameContext.boardManager.scoreMultiplier++;
     }
 
     public static bool IsRowShifted(int idx)
@@ -266,7 +288,6 @@ public class GameUtils
                 continue;
             return boardEnts[x, idx].boardBall.shifted;
         }
-        Debug.LogError("asdasdsad");
         return false;
     }
 }

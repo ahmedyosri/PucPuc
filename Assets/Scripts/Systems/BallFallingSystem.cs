@@ -17,9 +17,10 @@ public class BallFallingSystem : IExecuteSystem
         GameEntity[] entities = fallingEntities.GetEntities();
         foreach(GameEntity e in entities)
         {
-            e.fall.initialForce.y -= 9.8f * Time.deltaTime;
+            e.fall.initialForce.y -= 30 * Time.deltaTime*e.fall.gravityMultiplier;
             tmpV = e.fall.initialForce * Time.deltaTime;
             tmpV += e.position.pos;
+            e.gameObject.gameobject.transform.Rotate(Vector3.back, e.fall.initialForce.x*Time.deltaTime*30);
             e.ReplacePosition(tmpV);
 
             if (e.position.pos.y < -7)

@@ -26,11 +26,18 @@
 +Animated line renderer (20 + 60 rebrushing on shaders)
 +Add estimated-ball location system (20/20)
 +Add main menu (120) (tried on different styles)
++Add Perfect notification (10/25)
++Numbers greater than 1000 to be shortened (10/5)
++Board balancing in newly added rows (10/10)
++Board balancing related to score (--/20)
+*Fixed consequtive touches(15/5)
++Balls with 2048 value explodes (20/80) (trying different styles of explosion)
+*Polished fonts (--/10)
++Rotation for falling balls (--/10)
++Polished explosion (--/15)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-+Raycast cutdown
-+Add Perfect notification (10)
 +Add sounds (60)
 +Polish UI (60)
 *All vector2 to vector3

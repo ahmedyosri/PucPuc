@@ -14,7 +14,7 @@ public class PreparePrimaryBallSystem : ReactiveSystem<GameEntity>
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Moving));//, GameMatcher.ReachedTarget));
+        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Ready));
     }
 
     protected override bool Filter(GameEntity entity)

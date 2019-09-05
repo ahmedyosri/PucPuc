@@ -48,6 +48,14 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     ScoreController scoreController;
 
+    public int CurrentScore
+    {
+        get
+        {
+            return scoreController.CurrentScore;
+        }
+    }
+
     public GameContext gameContext;
 
     public Vector2 ZeroPosition
@@ -110,6 +118,7 @@ public class GameplayManager : MonoBehaviour
     public void OnBoardCleared()
     {
         gameplayUiAnimator.SetTrigger("OnPerfect");
+        AddScore(1000);
     }
 
     private void CreatePool()
@@ -136,6 +145,11 @@ public class GameplayManager : MonoBehaviour
         if (isGamePaused)
             return;
 
+        if(Input.GetKeyUp(KeyCode.T))
+        {
+            gameContext.boardManager.entities[2, 3].isExploding = true;
+        }
+
         systems.Execute();
         systems.Cleanup();
     }
@@ -152,6 +166,7 @@ public class GameplayManager : MonoBehaviour
     {
         objRef.transform.SetParent(pooledObjsParent);
         objRef.transform.localPosition = Vector3.zero;
+        objRef.transform.rotation = Quaternion.identity;
         objRef.Unlink();
         objRef.GetComponent<Collider2D>().enabled = ballPrefab.GetComponent<Collider2D>().enabled;
         pooledObjects.Enqueue(objRef);

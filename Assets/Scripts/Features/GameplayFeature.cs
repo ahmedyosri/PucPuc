@@ -19,6 +19,7 @@ public class GameplayFeature : Feature
         Add(new BallAdditionSystem(contexts));
         Add(new BallMergeStartingSystem(contexts));
         Add(new BallMergingSystem(contexts));
+        Add(new BallExplosionSystem(contexts));
         Add(new BallFallingSystem(contexts));
         Add(new BoardBalancerSystem(contexts));
         
