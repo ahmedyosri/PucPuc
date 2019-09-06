@@ -91,9 +91,10 @@ public class AimSystem : ReactiveSystem<InputEntity>
             end = hit.point;
             linePositions.Add(end);
             bool isShiftedRow = GameUtils.IsRowShifted(0);
-
-            float hShift = end.x - GameplayManager.Instance.ZeroPosition.x - (isShiftedRow ? 0.5f*GameplayManager.Instance.cellWidth : 0);
+            float hShift = end.x - GameplayManager.Instance.ZeroPosition.x + (isShiftedRow ? 0 : 0.5f * GameplayManager.Instance.cellWidth);
             Vector2 idx = new Vector2((int)(hShift / GameplayManager.Instance.cellWidth), 0);
+
+            Debug.Log(isShiftedRow + " | " + hShift);
 
             ballEntity.boardBall.boardIdx = idx;
             ballEntity.boardBall.shifted = isShiftedRow;
