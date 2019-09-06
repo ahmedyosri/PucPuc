@@ -182,10 +182,6 @@ public class GameUtils
             {
                 maxImpact = tmpCluster.Count;
                 maxImpactEntity = clusterEntity;
-                if(clusterEntity == null)
-                {
-                    Debug.Log("Apparently it was assigned to null, idx");
-                }
             }
         }
 
@@ -197,10 +193,6 @@ public class GameUtils
                 if (ent != e)
                 {
                     maxImpactEntity = ent;
-                    if (maxImpactEntity == null)
-                    {
-                        Debug.Log("Apparently f tany marra bazet");
-                    }
                     break;
                 }
             }

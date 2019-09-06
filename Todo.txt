@@ -39,6 +39,7 @@
 +Add sounds (60/120)
 *Fix a merging bug (15/40)
 *Fix a ceiling bug (--/30)
+*Tweaked sounds and UI (--/35)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 

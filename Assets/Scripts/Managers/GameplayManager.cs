@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Entitas;
 using Entitas.Unity;
@@ -195,6 +196,13 @@ public class GameplayManager : MonoBehaviour
 
     public void OnGameQuit()
     {
+        StartCoroutine(QuitCoroutine(0.5f));
+    }
+
+    private IEnumerator QuitCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Application.Quit();
+        yield break;
     }
 }
