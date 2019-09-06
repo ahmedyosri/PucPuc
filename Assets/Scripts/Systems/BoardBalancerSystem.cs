@@ -21,14 +21,8 @@ public class BoardBalancerSystem : IExecuteSystem
     readonly int minBoardDepth = 3;
 
     // row generation props
-    readonly float fixedNegativeRad = 2.0f;
-    readonly float scoreNegativeImpactRad = 3.0f;
     readonly float avgMinLimit = 6.0f;
-
-    readonly float fixedPositiveRad = 2.0f;
-    readonly float scorePositiveImpactRad = 4.0f;
     readonly float avgMaxLimit = 9.0f;
-
     readonly float effectiveScoreScale = 10000.0f;
     readonly float chanceToGetTwoSimilarBalls = 0.1f;
 
@@ -72,7 +66,7 @@ public class BoardBalancerSystem : IExecuteSystem
                 boardAvgValue += entities[x, y].boardBall.value;
                 boardUniqueValues.Add(entities[x, y].boardBall.value);
 
-                if (GameUtils.GetChildrenFor(entities[x, y].boardBall).Count < 2)
+                if (GameUtils.GetChildrenFor(entities, entities[x, y].boardBall).Count < 2)
                     possibleValues.Add(entities[x, y].boardBall.value);
             }
         }
@@ -147,8 +141,8 @@ public class BoardBalancerSystem : IExecuteSystem
 
         // How aggressive each new row is
         float scoreMeter = Mathf.Clamp(GameplayManager.Instance.CurrentScore, 0, effectiveScoreScale) / effectiveScoreScale;
-        int avgMin = (int)Mathf.Lerp(1, avgMinLimit, scoreMeter * 0.5f + (boardMeanValue / 20.0f));
-        int avgMax = (int)Mathf.Lerp(avgMinLimit, avgMaxLimit, scoreMeter * 0.5f + (boardMeanValue / 20.0f));
+        int avgMin = (int)Mathf.Lerp(1, avgMinLimit, scoreMeter * 0.5f + 0.5f * (boardMeanValue / 10.0f));
+        int avgMax = (int)Mathf.Lerp(avgMinLimit, avgMaxLimit, scoreMeter * 0.7f + 0.3f*(boardMeanValue / 10.0f));
 
         int lastValue = Random.Range(avgMin, avgMax);
         int newVal = lastValue;

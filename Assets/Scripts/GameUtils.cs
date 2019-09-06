@@ -39,6 +39,11 @@ public class GameUtils
 
     public static List<GameEntity> GetCluster(Vector2 boardIdx, int val = -1)
     {
+        return GetCluster(GameplayManager.Instance.gameContext.boardManager.entities, boardIdx, val);
+    }
+
+    private static List<GameEntity> GetCluster(GameEntity[,] boardEntities, Vector2 boardIdx, int val = -1)
+    {
         HashSet<GameEntity> visited = new HashSet<GameEntity>();
         Queue<Vector2> toVisit = new Queue<Vector2>();
 
@@ -46,7 +51,7 @@ public class GameUtils
 
         while (toVisit.Count > 0)
         {
-            GameEntity currEntity = GetEntity(toVisit.Peek());
+            GameEntity currEntity = GetEntity(boardEntities, toVisit.Peek());
             toVisit.Dequeue();
 
             BoardBall curr = currEntity.boardBall;
@@ -63,7 +68,7 @@ public class GameUtils
                 Vector2 neighborIdx = curr.boardIdx + v;
                 if (Mathf.Min(neighborIdx.x, neighborIdx.y) < 0 || neighborIdx.x >= BoardManager.width || neighborIdx.y >= BoardManager.length)
                     continue;
-                GameEntity neighborEntity = GetEntity(neighborIdx);
+                GameEntity neighborEntity = GetEntity(boardEntities, neighborIdx);
                 if (neighborEntity == null)
                     continue;
                 if (val != -1 && neighborEntity.boardBall.value != val)
@@ -78,9 +83,9 @@ public class GameUtils
         return visited.ToList();
     }
 
-    static GameEntity GetEntity(Vector2 boardIdx)
+    static GameEntity GetEntity(GameEntity[,] boardEntities, Vector2 boardIdx)
     {
-        return GameplayManager.Instance.gameContext.boardManager.entities[(int)boardIdx.x, (int)boardIdx.y];
+        return boardEntities[(int)boardIdx.x, (int)boardIdx.y];
     }
 
     public static List<Vector2> GetNeighborsFor(GameEntity e)
@@ -90,14 +95,13 @@ public class GameUtils
         return e.boardBall.shifted ? neighborsOfShited : neighborsOfNotShited;
     }
 
-    public static List<GameEntity> GetParentsFor(BoardBall b)
+    public static List<GameEntity> GetParentsFor(GameEntity[,] boardEntities, BoardBall b)
     {
         List<GameEntity> parents = new List<GameEntity>();
         List<Vector2> parentIdxs = b.shifted ? neighborsOfShited : neighborsOfNotShited;
         parentIdxs = parentIdxs.GetRange(0, 2);
 
-        BoardManager boardManager = GameplayManager.Instance.gameContext.boardManager;
-        foreach(Vector2 v in parentIdxs)
+        foreach (Vector2 v in parentIdxs)
         {
             int x = (int)(b.boardIdx.x + v.x);
             int y = (int)(b.boardIdx.y + v.y);
@@ -105,20 +109,40 @@ public class GameUtils
             if (y < 0 || y >= BoardManager.length || x < 0 || x >= BoardManager.width)
                 continue;
 
-            if (boardManager.entities[x, y] != null)
-                parents.Add(boardManager.entities[x, y]);
+            if (boardEntities[x, y] != null)
+                parents.Add(boardEntities[x, y]);
         }
 
         return parents;
     }
 
-    public static List<GameEntity> GetChildrenFor(BoardBall b)
+    public static List<GameEntity> GetSiblingsFor(GameEntity[,] boardEntities, BoardBall b)
+    {
+        List<GameEntity> siblings = new List<GameEntity>();
+        List<Vector2> siblingsIdxs = b.shifted ? neighborsOfShited : neighborsOfNotShited;
+        siblingsIdxs = siblingsIdxs.GetRange(2, 2);
+
+        foreach (Vector2 v in siblingsIdxs)
+        {
+            int x = (int)(b.boardIdx.x + v.x);
+            int y = (int)(b.boardIdx.y + v.y);
+
+            if (y < 0 || y >= BoardManager.length || x < 0 || x >= BoardManager.width)
+                continue;
+
+            if (boardEntities[x, y] != null)
+                siblings.Add(boardEntities[x, y]);
+        }
+
+        return siblings;
+    }
+
+    public static List<GameEntity> GetChildrenFor(GameEntity[,] boardEntities, BoardBall b)
     {
         List<GameEntity> children = new List<GameEntity>();
         List<Vector2> childrenIdxs = b.shifted ? neighborsOfShited : neighborsOfNotShited;
         childrenIdxs = childrenIdxs.GetRange(4, 2);
 
-        BoardManager boardManager = GameplayManager.Instance.gameContext.boardManager;
         foreach (Vector2 v in childrenIdxs)
         {
             int x = (int)(b.boardIdx.x + v.x);
@@ -127,8 +151,8 @@ public class GameUtils
             if (y < 0 || y >= BoardManager.length || x < 0 || x >= BoardManager.width)
                 continue;
 
-            if (boardManager.entities[x, y] != null)
-                children.Add(boardManager.entities[x, y]);
+            if (boardEntities[x, y] != null)
+                children.Add(boardEntities[x, y]);
         }
 
         return children;
@@ -148,23 +172,11 @@ public class GameUtils
         GameEntity maxImpactEntity = null;
         int maxImpact = 0;
 
+        List<GameEntity> qualifiedBalls = GameUtils.GetClusterHingeBalls(cluster);
+
         // 3- Find the entity that, if upgraded, will yield a new maximum cluster (considering the original shot ball e)
-        foreach (GameEntity clusterEntity in cluster)
+        foreach (GameEntity clusterEntity in qualifiedBalls)
         {
-            List<GameEntity> parents = GetParentsFor(clusterEntity.boardBall);
-            bool foundProperParent = false;
-
-            foreach (GameEntity parent in parents)
-            {
-                if (parent.boardBall.value == newVal)
-                    continue;
-                foundProperParent = true;
-                break;
-            }
-
-            if (!foundProperParent && clusterEntity.boardBall.boardIdx.y > 0)
-                continue;
-
             List<GameEntity> tmpCluster = GetCluster(clusterEntity.boardBall.boardIdx, newVal);
             if (tmpCluster.Count > maxImpact)
             {
@@ -230,6 +242,48 @@ public class GameUtils
         CheckForFallingEntities();
 
         gameContext.boardManager.scoreMultiplier++;
+    }
+
+    private static List<GameEntity> GetClusterHingeBalls(List<GameEntity> cluster)
+    {
+        HashSet<GameEntity> res = new HashSet<GameEntity>();
+
+        GameEntity[,] newEntities = GameplayManager.Instance.gameContext.boardManager.entities.Clone() as GameEntity[,];
+        foreach(var clusterEntity in cluster)
+        {
+            if (clusterEntity.boardBall.boardIdx.y == 0)
+                res.Add(clusterEntity);
+            newEntities[(int)clusterEntity.boardBall.boardIdx.x, (int)clusterEntity.boardBall.boardIdx.y] = null;
+        }
+
+        HashSet<GameEntity> reachableEntities = new HashSet<GameEntity>();
+        for(int x=0; x<BoardManager.width; x++)
+        {
+            if (newEntities[x, 0] == null)
+                continue;
+            List<GameEntity> tmpCluster = GetCluster(newEntities, new Vector2(x, 0));
+            foreach (GameEntity e in tmpCluster)
+                reachableEntities.Add(e);
+        }
+
+        List<GameEntity> conns = new List<GameEntity>();
+        foreach(var clusterEntity in cluster)
+        {
+            conns.Clear();
+            conns.AddRange(GetParentsFor(newEntities, clusterEntity.boardBall));
+            conns.AddRange(GetSiblingsFor(newEntities, clusterEntity.boardBall));
+
+            foreach(var c in conns)
+            {
+                if (reachableEntities.Contains(c))
+                {
+                    res.Add(clusterEntity);
+                    continue;
+                }
+            }
+        }
+
+        return res.ToList();
     }
 
     public static void CheckForFallingEntities()

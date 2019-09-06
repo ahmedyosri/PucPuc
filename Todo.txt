@@ -37,8 +37,8 @@
 +Polished explosion (--/15)
 +Added explosion PS (--/5)
 +Add sounds (60/120)
+*Fix a merging bug (15/40)
 
 ------------------------------------------------------ ToDo (Estimated(m))
 
-*Fix a merging bug (15)
 *All vector2 to vector3
